@@ -94,8 +94,8 @@ let user = "mch"; in
       };
 
       trackpad = {
-        Clicking = true;
-        # TrackpadThreeFingerDrag = true;
+        Clicking = false;
+        TrackpadThreeFingerDrag = false;
       };
     };
   };
