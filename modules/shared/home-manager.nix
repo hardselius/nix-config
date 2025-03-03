@@ -134,7 +134,6 @@ let name = "Martin Hardselius";
 
   git = {
     enable = true;
-    ignores = [ "*.swp" ];
     userName = name;
     userEmail = email;
     lfs = {
@@ -183,6 +182,43 @@ let name = "Martin Hardselius";
       wdiff = "diff --color-words";
       l = "log --graph --abbrev-commit --date=relative --pretty=format:'%C(yellow)%h%C(reset) %C(bold red)%d%C(reset) %s %C(bold cyan)[%(trailers:key=Issue,valueonly=true,separator=%x2C )]%C(reset) %C(green)(%cr)%C(reset) %C(bold blue)<%an>%C(reset)'";
     };
+    ignores = [
+      "[._]*.s[a-v][a-z]"
+      "[._]*.sw[a-p]"
+      "[._]s[a-rt-v][a-z]"
+      "[._]ss[a-gi-z]"
+      "[._]sw[a-p]"
+      "Session.vim"
+      "Sessionx.vim"
+      ".netrwhist"
+      "*~"
+      "tags"
+      "[._]*.un~"
+      "**/.idea/"
+      "**/*.iml"
+      "**/*.ipr"
+      "**/*.iws"
+      ".DS_Store"
+      ".AppleDouble"
+      ".LSOverride"
+      "Icon"
+      "._*"
+      ".DocumentRevisions-V100"
+      ".fseventsd"
+      ".Spotlight-V100"
+      ".TemporaryItems"
+      ".Trashes"
+      ".VolumeIcon.icns"
+      ".com.apple.timemachine.donotpresent"
+      ".AppleDB"
+      ".AppleDesktop"
+      "Network Trash Folder"
+      "Temporary Items"
+      ".apdisk"
+      ".envrc"
+      "shell.nix"
+      ".direnv/"
+    ];
   };
 
   vim.enable = false;
