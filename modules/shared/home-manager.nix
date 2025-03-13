@@ -82,10 +82,6 @@ let name = "Martin Hardselius";
 
       export EMAIL="${email}"
 
-      e() {
-          emacsclient -t "$@"
-      }
-
       # nix shortcuts
       shell() {
           nix-shell '<nixpkgs>' -A "$1"
