@@ -15,6 +15,7 @@ with pkgs; [
   just # save and run project specific commands
   killall
   less # more advanced file pager than `more`
+  meld
   neofetch
   openssh
   rsync # incremental file transfer util
@@ -23,6 +24,7 @@ with pkgs; [
   vim
   wget
   zip
+  pwgen
 
   # code tools
   jsonnet-language-server
@@ -78,6 +80,7 @@ with pkgs; [
 
   # Text and terminal utilities
   asciidoctor
+  bat
   chatgpt-cli
   graphviz # graph visualization tools
   htop # fancy `top`
