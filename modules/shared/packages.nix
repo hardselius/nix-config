@@ -99,6 +99,7 @@ with pkgs; [
   unrar
   unzip
   watch
+  xmlstarlet
 
   # Python packages
   python3
