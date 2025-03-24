@@ -22,8 +22,13 @@ in
 
   homebrew = {
     enable = true;
-    onActivation.cleanup = "zap";
+    onActivation = {
+      cleanup = "zap";
+    };
     casks = pkgs.callPackage ./casks.nix {};
+    brews = [
+      "smithy-cli"
+    ];
     # onActivation.cleanup = "uninstall";
 
     # These app IDs are from using the mas CLI app
