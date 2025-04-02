@@ -28,6 +28,7 @@ with pkgs; [
 
   # code tools
   jsonnet-language-server
+  vue-language-server
   nodePackages.bash-language-server
   nodePackages.prettier # code formatter
   nodePackages.typescript-language-server
