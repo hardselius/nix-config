@@ -7,21 +7,21 @@ _:
   "mqttx"
 
   # Communication Tools
-  "discord"
-  "notion"
-  "slack"
-  "telegram"
-  "zoom"
+  # "discord"
+  # "notion"
+  # "slack"
+  # "telegram"
+  # "zoom"
 
   # Utility Tools
-  "syncthing"
+  # "syncthing"
   "wezterm"
 
   # Entertainment Tools
-  "vlc"
+  # "vlc"
 
   # Productivity Tools
-  "raycast"
+  # "raycast"
 
   # Browsers
   "firefox"

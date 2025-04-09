@@ -22,9 +22,6 @@ in
 
   homebrew = {
     enable = true;
-    onActivation = {
-      cleanup = "zap";
-    };
     casks = pkgs.callPackage ./casks.nix {};
     brews = [
       "smithy-cli"
