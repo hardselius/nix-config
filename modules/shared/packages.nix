@@ -27,6 +27,7 @@ with pkgs; [
   pwgen
 
   # code tools
+  svelte-language-server
   jsonnet-language-server
   vue-language-server
   nodePackages.bash-language-server
