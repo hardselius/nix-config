@@ -53,7 +53,7 @@ let name = "Martin Hardselius";
       share = true;
     };
 
-    initExtraFirst = ''
+    initContent = ''
       if [[ -f /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]]; then
         . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
         . /nix/var/nix/profiles/default/etc/profile.d/nix.sh
@@ -92,9 +92,7 @@ let name = "Martin Hardselius";
 
       # Always color ls and group directories
       alias ls='ls --color=auto'
-    '';
 
-    initExtra = ''
       export KEYTIMEOUT=1
 
       vi-search-fix() {

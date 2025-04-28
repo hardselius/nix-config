@@ -21,10 +21,14 @@ with pkgs; [
   rsync # incremental file transfer util
   sqlite
   tenv # version manager for OpenTofu, Terraform and Terragrunt
-  vim-full
+  vim
   wget
   zip
   pwgen
+
+  # LLM stuff
+  ollama
+  llama-cpp
 
   # code tools
   svelte-language-server
