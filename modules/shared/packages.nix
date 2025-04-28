@@ -21,7 +21,7 @@ with pkgs; [
   rsync # incremental file transfer util
   sqlite
   tenv # version manager for OpenTofu, Terraform and Terragrunt
-  vim
+  vim-full
   wget
   zip
   pwgen
@@ -36,7 +36,6 @@ with pkgs; [
   nodePackages.vim-language-server
   podman # docker replacement
   pqrs # cli too to inspect parquet files
-  python39Packages.sqlparse
   nil # nix language server
   rustup
   shellcheck
