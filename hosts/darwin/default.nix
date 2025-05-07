@@ -35,7 +35,7 @@ let user = "mch"; in
 
   system.checks.verifyNixPath = false;
 
-  environment.systemPackages = (import ../../modules/shared/packages.nix { inherit pkgs; });
+  environment.systemPackages = import ../../modules/shared/packages.nix { inherit pkgs; };
 
   system = {
     stateVersion = 4;
