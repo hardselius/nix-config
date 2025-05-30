@@ -9,7 +9,7 @@ let
 in
 {
   imports = [
-   ./dock
+    ./dock
   ];
 
   # It me
@@ -22,7 +22,7 @@ in
 
   homebrew = {
     enable = true;
-    casks = pkgs.callPackage ./casks.nix {};
+    casks = pkgs.callPackage ./casks.nix { };
     brews = [
       "smithy-cli"
     ];
@@ -47,10 +47,10 @@ in
   # Enable home-manager
   home-manager = {
     useGlobalPkgs = true;
-    users.${user} = { pkgs, config, lib, ... }:{
+    users.${user} = { pkgs, config, lib, ... }: {
       home = {
         enableNixpkgsReleaseCheck = false;
-        packages = pkgs.callPackage ./packages.nix {};
+        packages = pkgs.callPackage ./packages.nix { };
         file = lib.mkMerge [
           sharedFiles
           additionalFiles
@@ -67,13 +67,13 @@ in
             wanip = "dig @resolver4.opendns.com myip.opendns.com +short";
             wanip4 = "dig @resolver4.opendns.com myip.opendns.com +short -4";
             wanip6 = "dig @resolver1.ipv6-sandbox.opendns.com AAAA myip.opendns.com +short -6";
-          # }
-          # // lib.optionalAttrs pkgs.stdenv.isDarwin {
+            # }
+            # // lib.optionalAttrs pkgs.stdenv.isDarwin {
             lightswitch = "osascript -e  'tell application \"System Events\" to tell appearance preferences to set dark mode to not dark mode'";
             restartaudio = "sudo killall coreaudiod";
           };
       };
-      programs = {} // import ../shared/home-manager.nix { inherit config pkgs lib; };
+      programs = { } // import ../shared/home-manager.nix { inherit config pkgs lib; };
 
       # Marked broken Oct 20, 2022 check later to remove this
       # https://github.com/nix-community/home-manager/issues/3344
@@ -82,27 +82,29 @@ in
   };
 
   # Fully declarative dock using the latest from Nix Store
-  local.dock.enable = true;
-  local.dock.username = user;
-  local.dock.entries = [
-    { path = "/System/Applications/Messages.app/"; }
-    { path = "/System/Applications/Facetime.app/"; }
-    { path = "/System/Applications/Music.app/"; }
-    { path = "/System/Applications/News.app/"; }
-    { path = "/System/Applications/Photos.app/"; }
-    { path = "/System/Applications/Photo Booth.app/"; }
-    { path = "/System/Applications/TV.app/"; }
-    { path = "/System/Applications/Home.app/"; }
-    {
-      path = "${config.users.users.${user}.home}/.local/share/";
-      section = "others";
-      options = "--sort name --view grid --display folder";
-    }
-    {
-      path = "${config.users.users.${user}.home}/Downloads";
-      section = "others";
-      options = "--sort name --view grid --display stack";
-    }
-  ];
+  local.dock = {
+    enable = true;
+    username = user;
+    entries = [
+      { path = "/System/Applications/Messages.app/"; }
+      { path = "/System/Applications/Facetime.app/"; }
+      { path = "/System/Applications/Music.app/"; }
+      { path = "/System/Applications/News.app/"; }
+      { path = "/System/Applications/Photos.app/"; }
+      { path = "/System/Applications/Photo Booth.app/"; }
+      { path = "/System/Applications/TV.app/"; }
+      { path = "/System/Applications/Home.app/"; }
+      {
+        path = "${config.users.users.${user}.home}/.local/share/";
+        section = "others";
+        options = "--sort name --view grid --display folder";
+      }
+      {
+        path = "${config.users.users.${user}.home}/Downloads";
+        section = "others";
+        options = "--sort name --view grid --display stack";
+      }
+    ];
+  };
 
 }

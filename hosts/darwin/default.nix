@@ -33,13 +33,12 @@ let user = "mch"; in
     # '';
   };
 
-  system.checks.verifyNixPath = false;
-
-  system.primaryUser = user;
 
   environment.systemPackages = import ../../modules/shared/packages.nix { inherit pkgs; };
 
   system = {
+    checks.verifyNixPath = false;
+    primaryUser = user;
     stateVersion = 4;
 
     defaults = {
