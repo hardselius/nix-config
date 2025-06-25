@@ -1,116 +1,142 @@
 { pkgs }:
 
 with pkgs; [
-  # General packages for development and system management
-  aspell # spell checker for many languages
-  aspellDicts.en
-  bash-completion
-  coreutils # GNU core utilites
-  curl
-  devbox
-  fd # fancy `find`
-  findutils # GNU find utils
-  gh # github cli tool
-  gnumake
-  just # save and run project specific commands
-  killall
-  less # more advanced file pager than `more`
-  meld
-  neofetch
-  openssh
-  rsync # incremental file transfer util
-  sqlite
-  tenv # version manager for OpenTofu, Terraform and Terragrunt
-  vim
-  wget
-  zip
-  pwgen
-
-  # LLM stuff
-  ollama
-  llama-cpp
-
-  # code tools
-  svelte-language-server
-  jsonnet-language-server
-  vue-language-server
-  nodePackages.bash-language-server
-  nodePackages.prettier # code formatter
-  nodePackages.typescript-language-server
-  nodePackages.vim-language-server
-  podman # docker replacement
-  pqrs # cli too to inspect parquet files
-  nil # nix language server
-  rustup
-  shellcheck
-  shfmt # shell parser and formatter
-  tgswitch
-  universal-ctags # maintained ctags implementation
-
-  # nix tools
+  # A
+  age # File encryption tool
+  age-plugin-yubikey # YubiKey plugin for age encryption
   alejandra
+  asciidoctor
+  aspell # Spell checker
+  aspellDicts.en
+  aws-vault
+  awscli2 # AWS CLI v2
+
+  # B
+  bash-completion # Bash completion scripts
+  bat # cat clone with syntax highlighting
+
+  # C
   cachix
-  nixpkgs-fmt
-  nodePackages.node2nix
+  coreutils # GNU core utilites
+  curl # 
 
-  # Encryption and security tools
-  age
-  age-plugin-yubikey
-  gnupg
-  gpgme # make gnupg easier
-  granted
-  libfido2
-  pass # "password manager"
-  xkcdpass # generate passwords
-  yubikey-manager # configure yubikeys
-
-  # Cloud-related tools and SDKs
-  docker
+  # D
+  dejavu_fonts
+  devbox # Development environment manager
+  docker # Docker
   docker-compose
 
-  # Media-related packages
-  dejavu_fonts
-  ffmpeg
-  fd
+  # F
+  fd # Fast find alternative
+  ffmpeg # Multimedia framework
+  findutils # GNU find utils
   font-awesome
-  hack-font
-  noto-fonts
-  noto-fonts-emoji
-  meslo-lgs-nf
 
-  # Node.js development tools
-  nodePackages.npm # globally install npm
-  nodePackages.prettier
-  nodejs
-
-  # Text and terminal utilities
-  asciidoctor
-  bat
-  chatgpt-cli
+  # G
+  gh # GitHub CLI tool
+  gnumake # GNU make
+  gnupg # GNU Privacy Guard
+  gpgme # GnuPG made easy
+  granted # 
   graphviz # graph visualization tools
-  htop # fancy `top`
-  hunspell
-  iftop
+
+  # H
+  hack-font
+  htop # Interactive process viewer
+  hunspell # Spell checker
+
+  # I
+  iftop # Network bandwidth monitor
+
+  # J
   jetbrains-mono
   jq # command line json processor
-  nmap
-  openssl
-  pure-prompt
-  qemu
-  renameutils
-  ripgrep # fancy `grep`
-  tmux
-  tree # depth indented directory listing
+  jsonnet-language-server # Jsonnet language server
+  just # save and run project specific commands
+
+  # K
+  killall # Kill processes
+
+  # L
+  less # more advanced file pager than `more`
+  libfido2 # FIDO2 library
+  llama-cpp # LLM stuff
+
+  # M
+  meld # Diff tool
+  meslo-lgs-nf
+
+  # N
+  neofetch # System information tool
+  nil # nix language server
+  nixpkgs-fmt # Nix file formatter
+  nmap # Network scanner
+  nodePackages.bash-language-server # Bash language server
+  nodePackages.npm # globally install npm
+  nodePackages.prettier # Code formatter
+  nodePackages.typescript-language-server # TypeScript language server
+  nodePackages.vim-language-server # Vim language server
+  nodejs # JavaScript runtime
+  noto-fonts
+  noto-fonts-emoji
+
+  # O
+  ollama # LLM stuff
+  openssh # SSH client
+  openssl # OpenSSL
+
+  # P
+  pass # Password manager
+  podman # Docker replacement
+  pqrs # Cli too to inspect parquet files
+  pure-prompt # ZSH prompt
+  pwgen # Password generator
+
+  python3 # Python 3
+
+
+  # Q
+  qemu # Virtual machine
+
+  # R
+  renameutils # Rename files in a directory
+  ripgrep # Fast grep alternative
+  rsync # Incremental file transfer util
+  rustup # Rust toolchain manager
+
+  # S 
+  shellcheck # Shell script linter
+  shfmt # Shell parser and formatter
+  sqlite # SQL database engine
+  svelte-language-server # Svelte language server
+
+  # T
+  tenv # Version manager for OpenTofu, Terraform and Terragrunt
+  tgswitch
+  tmux # Terminal multiplexer
+  tree # Directory tree viewer
+
+  # U
+  universal-ctags # maintained ctags implementation
   unrar
   unzip
-  watch
-  xmlstarlet
 
-  # Python packages
-  python3
+  # V
+  vim # Vim text editor
   virtualenv
+  vue-language-server # Vue language server
 
-  # Cloud stuff
-  aws-vault
-  awscli2
+  # W
+  watch
+  wget # File downloader
+
+  # X
+  xkcdpass # Password generator
+  xmlstarlet # Command line XML processor
+
+  # Y
+  yubikey-manager # configure yubikeys
+
+  # Z
+  zip # ZIP file archiver
 ]
