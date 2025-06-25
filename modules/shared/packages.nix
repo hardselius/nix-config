@@ -37,7 +37,6 @@ with pkgs; [
   gnumake # GNU make
   gnupg # GNU Privacy Guard
   gpgme # GnuPG made easy
-  granted # 
   graphviz # graph visualization tools
 
   # H

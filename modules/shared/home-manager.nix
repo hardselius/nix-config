@@ -22,6 +22,11 @@ let name = "Martin Hardselius";
     enableBashIntegration = true;
     enableZshIntegration = true;
   };
+
+  granted = {
+    enable = true;
+    enableZshIntegration = true;
+  };
     
   # Shared shell configuration
   zsh = {
