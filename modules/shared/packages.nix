@@ -103,7 +103,7 @@ with pkgs; [
   rsync # Incremental file transfer util
   rustup # Rust toolchain manager
 
-  # S 
+  # S
   shellcheck # Shell script linter
   shfmt # Shell parser and formatter
   sqlite # SQL database engine
@@ -130,6 +130,7 @@ with pkgs; [
   wget # File downloader
 
   # X
+  xan # CSV processing tool
   xkcdpass # Password generator
   xmlstarlet # Command line XML processor
 
