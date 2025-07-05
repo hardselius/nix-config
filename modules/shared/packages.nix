@@ -23,8 +23,6 @@ with pkgs; [
   # D
   dejavu_fonts
   devbox # Development environment manager
-  docker # Docker
-  docker-compose
 
   # F
   fd # Fast find alternative

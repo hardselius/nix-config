@@ -2,8 +2,6 @@ _:
 
 [
   # Development Tools
-  "homebrew/cask/docker"
-  "visual-studio-code"
   "mqttx"
 
   # Communication Tools
