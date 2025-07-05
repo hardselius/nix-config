@@ -136,6 +136,7 @@ with pkgs; [
 
   # Y
   yubikey-manager # configure yubikeys
+  yq
 
   # Z
   zip # ZIP file archiver
