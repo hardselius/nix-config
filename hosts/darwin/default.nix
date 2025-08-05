@@ -39,7 +39,7 @@ let user = "mch"; in
   system = {
     checks.verifyNixPath = false;
     primaryUser = user;
-    stateVersion = 4;
+    stateVersion = 5;
 
     defaults = {
       NSGlobalDomain = {

@@ -69,16 +69,14 @@ with pkgs; [
   nixpkgs-fmt # Nix file formatter
   nmap # Network scanner
   nodePackages.bash-language-server # Bash language server
-  nodePackages.npm # globally install npm
-  nodePackages.prettier # Code formatter
   nodePackages.typescript-language-server # TypeScript language server
   nodePackages.vim-language-server # Vim language server
-  nodejs # JavaScript runtime
   noto-fonts
   noto-fonts-emoji
 
   # O
   ollama # LLM stuff
+  openconnect # CLI VPN client
   openssh # SSH client
   openssl # OpenSSL
 
