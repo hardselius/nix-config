@@ -71,6 +71,7 @@ with pkgs; [
   nodePackages.bash-language-server # Bash language server
   nodePackages.typescript-language-server # TypeScript language server
   nodePackages.vim-language-server # Vim language server
+  nodejs_24
   noto-fonts
   noto-fonts-emoji
 
