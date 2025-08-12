@@ -12,6 +12,7 @@ with pkgs; [
   awscli2 # AWS CLI v2
 
   # B
+  basedpyright # Python language server
   bash-completion # Bash completion scripts
   bat # cat clone with syntax highlighting
 
@@ -87,9 +88,7 @@ with pkgs; [
   pqrs # Cli too to inspect parquet files
   pure-prompt # ZSH prompt
   pwgen # Password generator
-
   python3 # Python 3
-
 
   # Q
   qemu # Virtual machine
