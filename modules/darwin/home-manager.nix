@@ -1,4 +1,10 @@
-{ config, pkgs, lib, home-manager, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  home-manager,
+  ...
+}:
 
 let
   user = "mch";
@@ -47,18 +53,24 @@ in
   # Enable home-manager
   home-manager = {
     useGlobalPkgs = true;
-    users.${user} = { pkgs, config, lib, ... }: {
-      home = {
-        enableNixpkgsReleaseCheck = false;
-        packages = pkgs.callPackage ./packages.nix { };
-        file = lib.mkMerge [
-          sharedFiles
-          additionalFiles
-        ];
-        stateVersion = "23.11";
+    users.${user} =
+      {
+        pkgs,
+        config,
+        lib,
+        ...
+      }:
+      {
+        home = {
+          enableNixpkgsReleaseCheck = false;
+          packages = pkgs.callPackage ./packages.nix { };
+          file = lib.mkMerge [
+            sharedFiles
+            additionalFiles
+          ];
+          stateVersion = "23.11";
 
-        shellAliases =
-          {
+          shellAliases = {
             tf = "terraform";
             switch-yubikey = "gpg-connect-agent \"scd serialno\" \"learn --force\" /bye";
 
@@ -67,18 +79,17 @@ in
             wanip = "dig @resolver4.opendns.com myip.opendns.com +short";
             wanip4 = "dig @resolver4.opendns.com myip.opendns.com +short -4";
             wanip6 = "dig @resolver1.ipv6-sandbox.opendns.com AAAA myip.opendns.com +short -6";
-            # }
-            # // lib.optionalAttrs pkgs.stdenv.isDarwin {
-            lightswitch = "osascript -e  'tell application \"System Events\" to tell appearance preferences to set dark mode to not dark mode'";
-            restartaudio = "sudo killall coreaudiod";
+            vi = "nvim";
+            vim = "nvim";
+            vimdiff = "nvim -d";
           };
-      };
-      programs = { } // import ../shared/home-manager.nix { inherit config pkgs lib; };
+        };
+        programs = { } // import ../shared/home-manager.nix { inherit config pkgs lib; };
 
-      # Marked broken Oct 20, 2022 check later to remove this
-      # https://github.com/nix-community/home-manager/issues/3344
-      manual.manpages.enable = false;
-    };
+        # Marked broken Oct 20, 2022 check later to remove this
+        # https://github.com/nix-community/home-manager/issues/3344
+        manual.manpages.enable = false;
+      };
   };
 
   # Fully declarative dock using the latest from Nix Store

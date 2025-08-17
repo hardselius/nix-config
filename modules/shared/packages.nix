@@ -66,6 +66,7 @@ with pkgs; [
 
   # N
   neofetch # System information tool
+  neovim # Neovim text editor
   nil # nix language server
   nixpkgs-fmt # Nix file formatter
   nmap # Network scanner
