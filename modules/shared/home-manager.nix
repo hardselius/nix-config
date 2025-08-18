@@ -1,10 +1,17 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
-let name = "Martin Hardselius";
-    user = "mch";
-    email = "martin@hardselius.dev";
-    githubUser = "hardselius";
-    masterKey = "3F35E4CACBF42DE12E9053E503A6E6F786936619"; in
+let
+  name = "Martin Hardselius";
+  user = "mch";
+  email = "martin@hardselius.dev";
+  githubUser = "hardselius";
+  masterKey = "3F35E4CACBF42DE12E9053E503A6E6F786936619";
+in
 {
   direnv = {
     enable = true;
@@ -222,13 +229,13 @@ let name = "Martin Hardselius";
 
   vim.enable = false;
 
-  wezterm = {                                                                                                                                                                                       
+  wezterm = {
     enable = true;
     enableZshIntegration = true;
     enableBashIntegration = true;
     extraConfig = ''
       local wezterm = require 'wezterm'
- 
+
       function scheme_for_appearance(appearance)
         if appearance:find 'Dark' then
           return 'Rosé Pine (Gogh)'
@@ -236,7 +243,7 @@ let name = "Martin Hardselius";
           return 'Rosé Pine Dawn (Gogh)'
         end
       end
- 
+
       wezterm.on('window-config-reloaded', function(window, pane)
         local overrides = window:get_config_overrides() or {}
         local appearance = window:get_appearance()
@@ -246,7 +253,7 @@ let name = "Martin Hardselius";
           window:set_config_overrides(overrides)
         end
       end)
- 
+
       return {
         font = wezterm.font("Hack"),
         enable_scroll_bar = true,
@@ -263,23 +270,15 @@ let name = "Martin Hardselius";
     serverAliveInterval = 60;
     hashKnownHosts = true;
     includes = [
-      (lib.mkIf pkgs.stdenv.hostPlatform.isLinux
-        "/home/${user}/.ssh/config_external"
-      )
-      (lib.mkIf pkgs.stdenv.hostPlatform.isDarwin
-        "/Users/${user}/.ssh/config_external"
-      )
+      (lib.mkIf pkgs.stdenv.hostPlatform.isLinux "/home/${user}/.ssh/config_external")
+      (lib.mkIf pkgs.stdenv.hostPlatform.isDarwin "/Users/${user}/.ssh/config_external")
     ];
     matchBlocks = {
       "github.com" = {
         identitiesOnly = true;
         identityFile = [
-          (lib.mkIf pkgs.stdenv.hostPlatform.isLinux
-            "/home/${user}/.ssh/id_github"
-          )
-          (lib.mkIf pkgs.stdenv.hostPlatform.isDarwin
-            "/Users/${user}/.ssh/id_github"
-          )
+          (lib.mkIf pkgs.stdenv.hostPlatform.isLinux "/home/${user}/.ssh/id_github")
+          (lib.mkIf pkgs.stdenv.hostPlatform.isDarwin "/Users/${user}/.ssh/id_github")
         ];
       };
     };
@@ -295,7 +294,7 @@ let name = "Martin Hardselius";
       {
         plugin = power-theme;
         extraConfig = ''
-           set -g @tmux_power_theme 'gold'
+          set -g @tmux_power_theme 'gold'
         '';
       }
       {
@@ -366,63 +365,62 @@ let name = "Martin Hardselius";
       bind-key -T copy-mode-vi 'C-k' select-pane -U
       bind-key -T copy-mode-vi 'C-l' select-pane -R
       bind-key -T copy-mode-vi 'C-\' select-pane -l
-      '';
-    };
+    '';
+  };
 
-    gpg = {
-      enable = true;
-      settings = {
-        default-key = masterKey;
-        auto-key-locate = "keyserver";
-        keyserver = "pgp.mit.edu";
-        keyserver-options = "no-honor-keyserver-url include-revoked auto-key-retrieve";
+  gpg = {
+    enable = true;
+    settings = {
+      default-key = masterKey;
+      auto-key-locate = "keyserver";
+      keyserver = "pgp.mit.edu";
+      keyserver-options = "no-honor-keyserver-url include-revoked auto-key-retrieve";
 
-        # Use AES256, 192, or 128 as cipher
-        personal-cipher-preferences = "AES256 AES192 AES";
-        # Use SHA512, 384, or 256 as digest
-        personal-digest-preferences = "SHA512 SHA384 SHA256";
-        # Use ZLIB, BZIP2, ZIP, or no compression
-        personal-compress-preferences = "ZLIB BZIP2 ZIP Uncompressed";
-        # Default preferences for new keys
-        default-preference-list = "SHA512 SHA384 SHA256 AES256 AES192 AES ZLIB BZIP2 ZIP Uncompressed";
-        # SHA512 as digest to sign keys
-        cert-digest-algo = "SHA512";
-        # SHA512 as digest for symmetric ops
-        s2k-digest-algo = "SHA512";
-        # AES256 as cipher for symmetric ops
-        s2k-cipher-algo = "AES256";
-        # UTF-8 support for compatibility
-        charset = "utf-8";
-        # Show Unix timestamps
-        fixed-list-mode = true;
-        # No comments in signature
-        no-comments = true;
-        # No version in output
-        no-emit-version = true;
-        # Disable banner
-        no-greeting = true;
-        # Long hexidecimal key format
-        keyid-format = "0xlong";
-        # Display UID validity
-        list-options = "show-uid-validity";
-        verify-options = "show-uid-validity";
-        # Display all keys and their fingerprints
-        with-fingerprint = true;
-        # Cross-certify subkeys are present and valid
-        require-cross-certification = true;
-        # Disable caching of passphrase for symmetrical ops
-        no-symkey-cache = true;
-        # Enable smartcard
-        use-agent = true;
-        # Disable recipient key ID in messages
-        throw-keyids = true;
-      };
-      scdaemonSettings =
-        {
-          disable-ccid = true;
-        }
-        // lib.optionalAttrs pkgs.stdenv.isDarwin {
-          reader-port = ''"Yubico YubiKey OTP+FIDO+CCID"'';
-        };
+      # Use AES256, 192, or 128 as cipher
+      personal-cipher-preferences = "AES256 AES192 AES";
+      # Use SHA512, 384, or 256 as digest
+      personal-digest-preferences = "SHA512 SHA384 SHA256";
+      # Use ZLIB, BZIP2, ZIP, or no compression
+      personal-compress-preferences = "ZLIB BZIP2 ZIP Uncompressed";
+      # Default preferences for new keys
+      default-preference-list = "SHA512 SHA384 SHA256 AES256 AES192 AES ZLIB BZIP2 ZIP Uncompressed";
+      # SHA512 as digest to sign keys
+      cert-digest-algo = "SHA512";
+      # SHA512 as digest for symmetric ops
+      s2k-digest-algo = "SHA512";
+      # AES256 as cipher for symmetric ops
+      s2k-cipher-algo = "AES256";
+      # UTF-8 support for compatibility
+      charset = "utf-8";
+      # Show Unix timestamps
+      fixed-list-mode = true;
+      # No comments in signature
+      no-comments = true;
+      # No version in output
+      no-emit-version = true;
+      # Disable banner
+      no-greeting = true;
+      # Long hexidecimal key format
+      keyid-format = "0xlong";
+      # Display UID validity
+      list-options = "show-uid-validity";
+      verify-options = "show-uid-validity";
+      # Display all keys and their fingerprints
+      with-fingerprint = true;
+      # Cross-certify subkeys are present and valid
+      require-cross-certification = true;
+      # Disable caching of passphrase for symmetrical ops
+      no-symkey-cache = true;
+      # Enable smartcard
+      use-agent = true;
+      # Disable recipient key ID in messages
+      throw-keyids = true;
     };
+    scdaemonSettings = {
+      disable-ccid = true;
+    }
+    // lib.optionalAttrs pkgs.stdenv.isDarwin {
+      reader-port = ''"Yubico YubiKey OTP+FIDO+CCID"'';
+    };
+  };
 }
