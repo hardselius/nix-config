@@ -136,4 +136,7 @@ in
 
   programs = shared-programs // { };
 
+  xdg = {
+    enable = true;
+  };
 }

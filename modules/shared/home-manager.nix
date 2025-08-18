@@ -50,7 +50,7 @@ let name = "Martin Hardselius";
       "~"
     ];
     defaultKeymap = "viins";
-    dotDir = ".config/zsh";
+    dotDir = "${config.xdg.configHome}/zsh";
     history = {
       size = 50000;
       save = 500000;
