@@ -1,10 +1,15 @@
+-- Pull in the wezterm API.
 local wezterm = require 'wezterm'
+local config = wezterm.config_builder()
+
+config.font = wezterm.font("Hack")
+config.enable_scroll_bar = true
 
 function scheme_for_appearance(appearance)
 	if appearance:find 'Dark' then
-		return 'Rosé Pine (Gogh)'
+		return 'nightfox'
 	else
-		return 'Rosé Pine Dawn (Gogh)'
+		return 'dawnfox'
 	end
 end
 
@@ -18,7 +23,4 @@ wezterm.on('window-config-reloaded', function(window, pane)
 	end
 end)
 
-return {
-	font = wezterm.font("Hack"),
-	enable_scroll_bar = true,
-}
+return config

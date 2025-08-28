@@ -233,7 +233,7 @@ in
     enable = true;
     enableZshIntegration = true;
     enableBashIntegration = true;
-    extraConfig = ./config/wezterm/wezterm.lua;
+    extraConfig = builtins.readFile ./config/wezterm/wezterm.lua;
   };
 
   ssh = {
