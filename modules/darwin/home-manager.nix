@@ -79,9 +79,9 @@ in
             wanip = "dig @resolver4.opendns.com myip.opendns.com +short";
             wanip4 = "dig @resolver4.opendns.com myip.opendns.com +short -4";
             wanip6 = "dig @resolver1.ipv6-sandbox.opendns.com AAAA myip.opendns.com +short -6";
-            vi = "nvim";
-            vim = "nvim";
-            vimdiff = "nvim -d";
+            # vi = "nvim";
+            # vim = "nvim";
+            # vimdiff = "nvim -d";
           };
         };
         programs = { } // import ../shared/home-manager.nix { inherit config pkgs lib; };
