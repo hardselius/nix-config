@@ -2,7 +2,7 @@
 local wezterm = require 'wezterm'
 local config = wezterm.config_builder()
 
-config.font = wezterm.font("Hack")
+config.font = wezterm.font("Iosevka Comfy Fixed")
 config.enable_scroll_bar = true
 config.color_schemes = {
 	['alabaster_dark'] = {

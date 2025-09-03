@@ -45,6 +45,7 @@ with pkgs; [
 
   # I
   iftop # Network bandwidth monitor
+  iosevka
 
   # J
   jetbrains-mono
@@ -87,6 +88,7 @@ with pkgs; [
   pass # Password manager
   podman # Docker replacement
   pqrs # Cli too to inspect parquet files
+  proggyfonts
   pure-prompt # ZSH prompt
   pwgen # Password generator
   python3 # Python 3
