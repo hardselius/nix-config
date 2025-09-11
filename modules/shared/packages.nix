@@ -93,9 +93,6 @@ with pkgs; [
   pwgen # Password generator
   python3 # Python 3
 
-  # Q
-  qemu # Virtual machine
-
   # R
   renameutils # Rename files in a directory
   ripgrep # Fast grep alternative
