@@ -1,6 +1,7 @@
 { pkgs }:
 
-with pkgs; [
+with pkgs;
+[
   # A
   age # File encryption tool
   age-plugin-yubikey # YubiKey plugin for age encryption
@@ -19,7 +20,7 @@ with pkgs; [
   # C
   cachix
   coreutils # GNU core utilites
-  curl # 
+  curl
 
   # D
   dejavu_fonts
@@ -62,7 +63,6 @@ with pkgs; [
   llama-cpp # LLM stuff
 
   # M
-  meld # Diff tool
   meslo-lgs-nf
 
   # N

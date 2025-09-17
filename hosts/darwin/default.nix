@@ -1,6 +1,8 @@
 { config, pkgs, ... }:
 
-let user = "mch"; in
+let
+  user = "mch";
+in
 
 {
   imports = [
@@ -17,8 +19,14 @@ let user = "mch"; in
     enable = false;
 
     settings = {
-      trusted-users = [ "@admin" "${user}" ];
-      substituters = [ "https://nix-community.cachix.org" "https://cache.nixos.org" ];
+      trusted-users = [
+        "@admin"
+        "${user}"
+      ];
+      substituters = [
+        "https://nix-community.cachix.org"
+        "https://cache.nixos.org"
+      ];
       trusted-public-keys = [ "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=" ];
     };
 
@@ -33,13 +41,12 @@ let user = "mch"; in
     # '';
   };
 
-
   environment.systemPackages = import ../../modules/shared/packages.nix { inherit pkgs; };
 
   system = {
     checks.verifyNixPath = false;
     primaryUser = user;
-    stateVersion = 5;
+    stateVersion = 4;
 
     defaults = {
       NSGlobalDomain = {

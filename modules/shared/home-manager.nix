@@ -238,17 +238,20 @@ in
 
   ssh = {
     enable = true;
-    controlMaster = "auto";
-    controlPath = "/tmp/ssh-%u-%r@%h:%p";
-    controlPersist = "60";
-    forwardAgent = true;
-    serverAliveInterval = 60;
-    hashKnownHosts = true;
+    enableDefaultConfig = false;
     includes = [
       (lib.mkIf pkgs.stdenv.hostPlatform.isLinux "/home/${user}/.ssh/config_external")
       (lib.mkIf pkgs.stdenv.hostPlatform.isDarwin "/Users/${user}/.ssh/config_external")
     ];
     matchBlocks = {
+      "*" = {
+        controlMaster = "auto";
+        controlPath = "/tmp/ssh-%u-%r@%h:%p";
+        controlPersist = "60";
+        forwardAgent = true;
+        hashKnownHosts = true;
+        serverAliveInterval = 60;
+      };
       "github.com" = {
         identitiesOnly = true;
         identityFile = [
