@@ -35,6 +35,11 @@ in
     enableZshIntegration = true;
   };
 
+  bash = {
+    enable = true;
+    bashrcExtra = builtins.readFile ./config/bash/config.bash;
+  };
+
   # Shared shell configuration
   zsh = {
     enable = true;
