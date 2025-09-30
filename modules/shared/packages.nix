@@ -6,6 +6,7 @@ with pkgs;
   age # File encryption tool
   age-plugin-yubikey # YubiKey plugin for age encryption
   alejandra
+  aporetic # Custom build of Iosevka
   asciidoctor
   aspell # Spell checker
   aspellDicts.en
