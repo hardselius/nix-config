@@ -90,7 +90,6 @@ with pkgs;
   podman # Docker replacement
   pqrs # Cli too to inspect parquet files
   proggyfonts
-  pure-prompt # ZSH prompt
   pwgen # Password generator
   python3 # Python 3
 

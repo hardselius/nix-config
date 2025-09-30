@@ -39,12 +39,12 @@ in
   zsh = {
     enable = true;
     autocd = false;
-    plugins = [
-      {
-        name = "pure";
-        src = pkgs.pure-prompt;
-      }
-    ];
+    antidote = {
+      enable = true;
+      plugins = [
+        "sindresorhus/pure kind:fpath"
+      ];
+    };
 
     enableCompletion = true;
     completionInit = ''
@@ -86,8 +86,8 @@ in
       gpg-connect-agent updatestartuptty /bye > /dev/null
 
       # Vim is my editor
-      export ALTERNATE_EDITOR=""
-      export EDITOR="vim"
+      export ALTERNATE_EDITOR="vim"
+      export EDITOR="nvim"
 
       export PAGER="less"
       export CLICOLOR=1
@@ -126,10 +126,8 @@ in
       zle -N resume
       bindkey "^Z" resume
 
-      autoload -U promptinit; promptinit
-
       # Configure pure-promt
-      prompt pure
+      autoload -Uz promptinit && promptinit && prompt pure
       zstyle :prompt:pure:prompt:success color green
     '';
   };
