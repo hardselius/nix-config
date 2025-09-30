@@ -126,10 +126,6 @@ in
       zle -N resume
       bindkey "^Z" resume
 
-      # function ls() {
-      #   ${pkgs.coreutils}/bin/ls --color=auto --group-directories-first "$@"
-      # }
-
       autoload -U promptinit; promptinit
 
       # Configure pure-promt
