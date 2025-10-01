@@ -6,6 +6,7 @@
 }:
 
 let
+  inherit (pkgs) stdenv;
   name = "Martin Hardselius";
   user = "mch";
   email = "martin@hardselius.dev";
@@ -233,6 +234,43 @@ in
     enableZshIntegration = true;
     enableBashIntegration = true;
     extraConfig = builtins.readFile ./config/wezterm/wezterm.lua;
+  };
+
+  ghostty = {
+    enable = true;
+    package = if stdenv.isDarwin then pkgs.ghostty-bin else pkgs.ghostty;
+    settings = {
+      theme = "light:Alabaster, dark:Alabaster Dark";
+      font-family = "Aporetic Sans Mono";
+    };
+    themes = {
+      "Alabaster Dark" = {
+        palette = [
+          "0=#000000"
+          "1=#d2322d"
+          "2=#6abf40"
+          "3=#cd974b"
+          "4=#217EBC"
+          "5=#9B3596"
+          "6=#178F79"
+          "7=#cecece"
+          "8=#333333"
+          "9=#c33c33"
+          "10=#95cb82"
+          "11=#dfdf8e"
+          "12=#71aed7"
+          "13=#cc8bc9"
+          "14=#47BEA9"
+          "15=#ffffff"
+        ];
+        foreground = "#cecece";
+        background = "#0e1415";
+        cursor-color = "#cd974b";
+        cursor-text = "#0e1415";
+        selection-background = "#293334";
+        selection-foreground = "#cecece";
+      };
+    };
   };
 
   ssh = {
