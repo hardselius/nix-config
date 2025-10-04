@@ -38,7 +38,17 @@ in
 
   bash = {
     enable = true;
+    enableCompletion = true;
     bashrcExtra = builtins.readFile ./config/bash/config.bash;
+    historyControl = [
+      "ignoredups"
+    ];
+    historyIgnore = [
+      "pwd"
+      "ls"
+      "cd"
+      "exit"
+    ];
   };
 
   # Shared shell configuration

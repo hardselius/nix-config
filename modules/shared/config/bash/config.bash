@@ -52,6 +52,7 @@ user_paths() {
 	MANPATH=/usr/local/man:/usr/local/share/man:/usr/man:/usr/share/man
 }
 
+nix
 user_paths
 packages
 shell_config
