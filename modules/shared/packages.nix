@@ -77,7 +77,6 @@ with pkgs;
   nodePackages.vim-language-server # Vim language server
   nodejs_24
   noto-fonts
-  noto-fonts-emoji
 
   # O
   ollama # LLM stuff

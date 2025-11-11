@@ -322,8 +322,6 @@ in
     feather-font # from overlay
     jetbrains-mono
     font-awesome
-    noto-fonts
-    noto-fonts-emoji
   ];
 
   environment.systemPackages = with pkgs; [
