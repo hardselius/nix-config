@@ -254,6 +254,7 @@ in
     settings = {
       theme = "light:Alabaster, dark:Alabaster Dark";
       font-family = "Aporetic Sans Mono";
+      shell-integration-features = "ssh-terminfo,ssh-env";
     };
     themes = {
       "Alabaster Dark" = {
