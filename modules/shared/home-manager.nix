@@ -295,12 +295,12 @@ in
     ];
     matchBlocks = {
       "*" = {
-        controlMaster = "auto";
-        controlPath = "/tmp/ssh-%u-%r@%h:%p";
-        controlPersist = "60";
-        forwardAgent = true;
+        # Set the default values we want to keep
+        sendEnv = [
+          "LANG"
+          "LC_*"
+        ];
         hashKnownHosts = true;
-        serverAliveInterval = 60;
       };
       "github.com" = {
         identitiesOnly = true;
