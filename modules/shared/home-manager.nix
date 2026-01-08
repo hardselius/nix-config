@@ -254,7 +254,7 @@ in
     settings = {
       theme = "light:Alabaster, dark:Alabaster Dark";
       font-family = "Aporetic Sans Mono";
-      shell-integration-features = "ssh-terminfo,ssh-env";
+      shell-integration-features = "ssh-env";
     };
     themes = {
       "Alabaster Dark" = {
@@ -295,20 +295,14 @@ in
     ];
     matchBlocks = {
       "*" = {
-        controlMaster = "auto";
-        controlPath = "/tmp/ssh-%u-%r@%h:%p";
-        controlPersist = "60";
         # Set the default values we want to keep
         sendEnv = [
           "LANG"
           "LC_*"
         ];
-        hashKnownHosts = true;
-        serverAliveInterval = 60;
       };
       "github.com" = {
         identitiesOnly = true;
-        forwardAgent = true;
         identityFile = [
           (lib.mkIf pkgs.stdenv.hostPlatform.isLinux "/home/${user}/.ssh/id_github")
           (lib.mkIf pkgs.stdenv.hostPlatform.isDarwin "/Users/${user}/.ssh/id_github")
