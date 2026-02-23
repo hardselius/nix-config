@@ -87,7 +87,9 @@ in
         . /nix/var/nix/profiles/default/etc/profile.d/nix.sh
       fi
 
-      # Define variables for directories
+      ${lib.optionalString pkgs.stdenv.hostPlatform.isDarwin "export NIX_SSL_CERT_FILE=/etc/nix/macos-keychain.crt"}
+
+      # Define PATH variables
       export PATH=$HOME/.pnpm-packages/bin:$HOME/.pnpm-packages:$PATH
       export PATH=$HOME/.npm-packages/bin:$HOME/bin:$PATH
       export PATH=$HOME/.local/share/bin:$PATH

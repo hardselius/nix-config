@@ -19,7 +19,6 @@ with pkgs;
   bat # cat clone with syntax highlighting
 
   # C
-  cachix
   coreutils # GNU core utilites
   curl
 

@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ lib, pkgs, ... }:
 
 let
   user = "mch";
@@ -11,14 +11,15 @@ in
   ];
 
   nix = {
-    package = pkgs.nix;
-    # This will allow you to use nix-darwin with Determinate. Some nix-darwin
-    # functionality that relies on managing the Nix installation, like the
-    # `nix.*` options to adjust Nix settings or configure a Linux builder, will
-    # be unavailable.
+    # Let Determinate Nix handle Nix configuration
     enable = false;
+  };
 
-    settings = {
+  determinateNix = {
+    # Enable the Determinate Nix module
+    enable = true;
+
+    customSettings = {
       trusted-users = [
         "@admin"
         "${user}"
@@ -29,19 +30,17 @@ in
       ];
       trusted-public-keys = [ "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=" ];
     };
-
-    # gc = {
-    #   automatic = true;
-    #   interval = { Weekday = 0; Hour = 2; Minute = 0; };
-    #   options = "--delete-older-than 30d";
-    # };
-
-    # extraOptions = ''
-    #   experimental-features = nix-command flakes
-    # '';
   };
 
-  environment.systemPackages = import ../../modules/shared/packages.nix { inherit pkgs; };
+  environment = {
+    systemPackages = import ../../modules/shared/packages.nix { inherit pkgs; };
+
+    variables = {
+      NIX_SSL_CERT_FILE = lib.mkIf (builtins.pathExists /etc/nix/macos-keychain.crt) (
+        lib.mkAfter "/etc/nix/macos-keychain.crt"
+      );
+    };
+  };
 
   system = {
     checks.verifyNixPath = false;

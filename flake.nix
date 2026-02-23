@@ -73,7 +73,7 @@
                 git
                 curl
               ];
-              shellHook = with pkgs; ''
+              shellHook = ''
                 export EDITOR=vim
               '';
             };
@@ -123,18 +123,6 @@
           modules = [
             # Add the determinate nix-darwin module
             inputs.determinate.darwinModules.default
-
-            # Configure the determinate module
-            (
-              { config, lib, ... }:
-              {
-                determinateNix = {
-                  # Let Determinate Nix handle Nix configuration rather than nix-darwin
-                  enable = true;
-                };
-              }
-            )
-
             home-manager.darwinModules.home-manager
             nix-homebrew.darwinModules.nix-homebrew
             {
