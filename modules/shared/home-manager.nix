@@ -243,13 +243,6 @@ in
 
   vim.enable = false;
 
-  wezterm = {
-    enable = true;
-    enableZshIntegration = true;
-    enableBashIntegration = true;
-    extraConfig = builtins.readFile ./config/wezterm/wezterm.lua;
-  };
-
   ghostty = {
     enable = true;
     package = if stdenv.isDarwin then pkgs.ghostty-bin else pkgs.ghostty;
