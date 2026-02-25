@@ -19,6 +19,7 @@ with pkgs;
   bat # cat clone with syntax highlighting
 
   # C
+  copilot-language-server
   coreutils # GNU core utilites
   curl
 

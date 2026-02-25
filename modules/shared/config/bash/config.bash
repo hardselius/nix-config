@@ -110,19 +110,14 @@ prompt() {
 
 	SEAFLY_SUCCESS_COLOR=$(echo -ne '\e[38;5;4m')
 	SEAFLY_PROMPT_SYMBOL="❯"
-	SEAFLY_GIT_PREFIX="("
-	SEAFLY_GIT_SUFFIX=")"
-	SEAFLY_GIT_DIRTY="*"
-	SEAFLY_GIT_STASH="$"
-	SEAFLY_GIT_AHEAD=">"
-	SEAFLY_GIT_BEHIND="<"
-	SEAFLY_GIT_DIVERGED="<>"
-
+	SEAFLY_GIT_STASH="≡"
+	SEAFLY_GIT_DIRTY="✖"
+	SEAFLY_GIT_STAGED="✔"
 	SEAFLY_PREFIX_COLOR="$(tput setaf 13)"
 	SEAFLY_SUCCESS_COLOR="$(tput setaf 2)"
 	SEAFLY_ALERT_COLOR="$(tput setaf 9)"
 	SEAFLY_HOST_COLOR="$(tput setaf 7)"
-	SEAFLY_GIT_COLOR="$(tput setaf 8)"
+	SEAFLY_GIT_COLOR="$(tput setaf 242)"
 	SEAFLY_PATH_COLOR="$(tput setaf 12)"
 	seafly_pre_command_hook="seafly_pre_command"
 	seafly_prompt_prefix_hook="seafly_prompt_prefix"
@@ -186,7 +181,7 @@ seafly_pre_command() {
 
 seafly_prompt_prefix() {
 	if jobs -p | grep -q .; then
-		echo "\e[38;5;8m*"
+		echo "\e[38;5;9m✦"
 	fi
 }
 
