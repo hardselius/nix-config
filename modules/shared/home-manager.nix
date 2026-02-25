@@ -21,11 +21,17 @@ in
 
   dircolors = {
     enable = true;
+    enableZshIntegration = true;
+    extraConfig = builtins.readFile ./config/bash/ls_colors;
+  };
+
+  fzf = {
+    enable = true;
     enableBashIntegration = true;
     enableZshIntegration = true;
   };
 
-  fzf = {
+  zoxide = {
     enable = true;
     enableBashIntegration = true;
     enableZshIntegration = true;
@@ -40,15 +46,6 @@ in
     enable = true;
     enableCompletion = true;
     bashrcExtra = builtins.readFile ./config/bash/config.bash;
-    historyControl = [
-      "ignoredups"
-    ];
-    historyIgnore = [
-      "pwd"
-      "ls"
-      "cd"
-      "exit"
-    ];
   };
 
   # Shared shell configuration
