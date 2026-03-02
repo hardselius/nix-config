@@ -48,6 +48,29 @@ in
     bashrcExtra = builtins.readFile ./config/bash/config.bash;
   };
 
+  starship = {
+    enable = true;
+    enableBashIntegration = true;
+    settings = {
+      format = lib.concatStrings [
+        "$username"
+        "$hostname"
+        "$directory"
+        "$git_branch"
+        "$git_state"
+        "$git_status"
+        "$cmd_duration"
+        "$line_break"
+        "$jobs"
+        "$python"
+        "$character"
+      ];
+    };
+    presets = [
+      "pure-preset"
+    ];
+  };
+
   # Shared shell configuration
   zsh = {
     enable = true;

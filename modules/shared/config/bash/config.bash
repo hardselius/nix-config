@@ -1,3 +1,5 @@
+set -o vi
+
 # -- [ Aliases ] ---------------------------------------------------------------
 #
 alias ls='ls --color=tty'
@@ -22,16 +24,17 @@ export LESS_TERMCAP_me=$'\e[0m'        # end bold      - reset
 export LESS_TERMCAP_ue=$'\e[0m'        # end underline - reset
 export LESS_TERMCAP_se=$'\e[0m'        # end standout  - reset
 export LESSHISTFILE=-
+
 # LS_COLORS (refer to: https://is.gd/6MzI27)
 #   mi - completion options color
 #   so - completion matching-prefix color
-export LS_COLORS="no=00:fi=00:di=38;5;111:ln=38;5;117:pi=38;5;43:bd=38;5;212:\
-cd=38;5;219:or=30;48;5;203:ow=38;5;75:so=38;5;252;48;5;0:su=38;5;168:\
-ex=38;5;156:mi=38;5;115:\
-*.avi=38;2;175;215;175:*.mpg=38;2;175;215;175:*.mp4=38;2;244;180;180:\
-*.epub=38;2;200;200;246:*.dsf=38;2;255;175;215:*.conf=38;2;95;215;175:\
-*.md=38;2;213;218;180:*README=38;2;213;218;180:\
-*.pdf=38;2;218;218;218"
+# export LS_COLORS="no=00:fi=00:di=38;5;111:ln=38;5;117:pi=38;5;43:bd=38;5;212:\
+# cd=38;5;219:or=30;48;5;203:ow=38;5;75:so=38;5;252;48;5;0:su=38;5;168:\
+# ex=38;5;156:mi=38;5;115:\
+# *.avi=38;2;175;215;175:*.mpg=38;2;175;215;175:*.mp4=38;2;244;180;180:\
+# *.epub=38;2;200;200;246:*.dsf=38;2;255;175;215:*.conf=38;2;95;215;175:\
+# *.md=38;2;213;218;180:*README=38;2;213;218;180:\
+# *.pdf=38;2;218;218;218"
 export PAGER=less
 export MANPAGER='nvim +Man!'
 
@@ -99,33 +102,6 @@ history_truncate() {
 	history -c && history -r
 }
 
-# shellcheck disable=SC2034,1090
-prompt() {
-	# bash-seafly-prompt (https://github.com/bluz71/bash-seafly-prompt)
-	#
-	# Install the package if it does not exist.
-	if ! [[ -d ~/.bash-packages/bash-seafly-prompt ]]; then
-		git clone --depth 1 https://github.com/bluz71/bash-seafly-prompt ~/.bash-packages/bash-seafly-prompt
-	fi
-
-	SEAFLY_SUCCESS_COLOR=$(echo -ne '\e[38;5;4m')
-	SEAFLY_PROMPT_SYMBOL="❯"
-	SEAFLY_GIT_STASH="≡"
-	SEAFLY_GIT_DIRTY="✖"
-	SEAFLY_GIT_STAGED="✔"
-	SEAFLY_PREFIX_COLOR="$(tput setaf 13)"
-	SEAFLY_SUCCESS_COLOR="$(tput setaf 2)"
-	SEAFLY_ALERT_COLOR="$(tput setaf 9)"
-	SEAFLY_HOST_COLOR="$(tput setaf 7)"
-	SEAFLY_GIT_COLOR="$(tput setaf 242)"
-	SEAFLY_PATH_COLOR="$(tput setaf 12)"
-	seafly_pre_command_hook="seafly_pre_command"
-	seafly_prompt_prefix_hook="seafly_prompt_prefix"
-	# Custom colors for prompt prefix; for performance reasons calculate the
-	# colors outside the 'seafly_prompt_prefix' function.
-	. ~/.bash-packages/bash-seafly-prompt/command_prompt.bash
-}
-
 shell_config() {
 	# First, make sure ~/.history has not been truncated.
 	if [[ $(wc -l ~/.history | awk '{print $1}') -lt 1000 ]]; then
@@ -170,21 +146,6 @@ shell_config() {
 	umask 002
 }
 
-seafly_pre_command() {
-	if [[ -n $HOMEBREW_PREFIX ]]; then
-		history -a
-		__zoxide_hook
-	else
-		history -a
-	fi
-}
-
-seafly_prompt_prefix() {
-	if jobs -p | grep -q .; then
-		echo "\e[38;5;9m✦"
-	fi
-}
-
 user_paths() {
 	if [[ $OS == "Linux" ]]; then
 		# Note, in Linux /bin and /sbin now are symlinks to /usr equivalents.
@@ -198,7 +159,6 @@ user_paths() {
 
 nix
 user_paths
-prompt
 dev_config
 gpg_config
 shell_config
