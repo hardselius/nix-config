@@ -31,6 +31,7 @@ in
     casks = pkgs.callPackage ./casks.nix { };
     brews = [
       "smithy-cli"
+      "node"
     ];
     # onActivation.cleanup = "uninstall";
 
