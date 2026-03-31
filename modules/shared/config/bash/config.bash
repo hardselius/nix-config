@@ -1,6 +1,6 @@
 set -o vi
 
-# -- [ Aliases ] ---------------------------------------------------------------
+# -- [ ALIASES ] ---------------------------------------------------------------
 #
 alias ls='ls --color=tty'
 alias diff='difft'
@@ -12,7 +12,7 @@ shopt -s cdspell
 # Bind ^l to `clear -x` to preserve buffer history (only in interactive shells)
 [[ $- == *i* ]] && bind -x $'"\C-l":clear -x;'
 
-# -- [ Environment Variables ] -------------------------------------------------
+# -- [ ENVIRONMENT VARIABLES ] -------------------------------------------------
 #
 export EDITOR=nvim
 export LESS='-F -Q -M -R -X -i -g -s -x4'
@@ -25,16 +25,6 @@ export LESS_TERMCAP_ue=$'\e[0m'        # end underline - reset
 export LESS_TERMCAP_se=$'\e[0m'        # end standout  - reset
 export LESSHISTFILE=-
 
-# LS_COLORS (refer to: https://is.gd/6MzI27)
-#   mi - completion options color
-#   so - completion matching-prefix color
-# export LS_COLORS="no=00:fi=00:di=38;5;111:ln=38;5;117:pi=38;5;43:bd=38;5;212:\
-# cd=38;5;219:or=30;48;5;203:ow=38;5;75:so=38;5;252;48;5;0:su=38;5;168:\
-# ex=38;5;156:mi=38;5;115:\
-# *.avi=38;2;175;215;175:*.mpg=38;2;175;215;175:*.mp4=38;2;244;180;180:\
-# *.epub=38;2;200;200;246:*.dsf=38;2;255;175;215:*.conf=38;2;95;215;175:\
-# *.md=38;2;213;218;180:*README=38;2;213;218;180:\
-# *.pdf=38;2;218;218;218"
 export PAGER=less
 export MANPAGER='nvim +Man!'
 
@@ -42,7 +32,7 @@ export MANPAGER='nvim +Man!'
 # shellcheck disable=SC2155
 export OS=$(uname)
 
-# -- [ Functions ] -------------------------------------------------------------
+# -- [ FUNCTIONS ] -------------------------------------------------------------
 #
 
 dev_config() {
@@ -70,7 +60,7 @@ gpg_config() {
 	gpg-connect-agent updatestartuptty /bye >/dev/null
 }
 
-nix() {
+nix_config() {
 	if [[ -f /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]]; then
 		. /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
 		. /nix/var/nix/profiles/default/etc/profile.d/nix.sh
@@ -80,6 +70,11 @@ nix() {
 	if [[ $OS == "Darwin" ]]; then
 		export NIX_SSL_CERT_FILE=/etc/nix/macos-keychain.crt
 	fi
+}
+
+# Nix shell shortcut
+shell() {
+	nix-shell '<nixpkgs>' -A "$1"
 }
 
 history_truncate() {
@@ -157,7 +152,7 @@ user_paths() {
 	export MANPATH=/usr/local/man:/usr/local/share/man:/usr/man:/usr/share/man:$MANPATH
 }
 
-nix
+nix_config
 user_paths
 dev_config
 gpg_config

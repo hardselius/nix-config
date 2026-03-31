@@ -51,6 +51,7 @@ in
   starship = {
     enable = true;
     enableBashIntegration = true;
+    enableZshIntegration = true;
     settings = {
       format = lib.concatStrings [
         "$username"
@@ -75,19 +76,19 @@ in
   zsh = {
     enable = true;
     autocd = false;
-    antidote = {
-      enable = true;
-      plugins = [
-        "sindresorhus/pure kind:fpath"
-      ];
-    };
 
     enableCompletion = true;
     completionInit = ''
+      autoload -Uz compinit
+      # Cache completions for 24 hours to improve performance
+      if [[ -n ''${ZDOTDIR}/.zcompdump(#qN.mh+24) ]]; then
+        compinit
+      else
+        compinit -C
+      fi
       autoload bashcompinit && bashcompinit
-      autoload -Uz compinit && compinit
-      compinit
     '';
+
     cdpath = [
       "."
       "~"
@@ -101,73 +102,7 @@ in
       share = true;
     };
 
-    initContent = ''
-      if [[ -f /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]]; then
-        . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
-        . /nix/var/nix/profiles/default/etc/profile.d/nix.sh
-      fi
-
-      ${lib.optionalString pkgs.stdenv.hostPlatform.isDarwin "export NIX_SSL_CERT_FILE=/etc/nix/macos-keychain.crt"}
-
-      # Define PATH variables
-      export PATH=$HOME/.pnpm-packages/bin:$HOME/.pnpm-packages:$PATH
-      export PATH=$HOME/.npm-packages/bin:$HOME/bin:$PATH
-      export PATH=$HOME/.local/share/bin:$PATH
-      export PATH=$HOME/bin:$HOME/.local/bin:$HOME/.cargo/bin:$PATH
-
-      # Remove history data we don't want to see
-      export HISTIGNORE="pwd:ls:cd"
-
-      export GPG_TTY="$(tty)"
-      export SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
-      gpgconf --launch gpg-agent
-      gpg-connect-agent updatestartuptty /bye > /dev/null
-
-      # Vim is my editor
-      export ALTERNATE_EDITOR="vim"
-      export EDITOR="nvim"
-
-      export PAGER="less"
-      export CLICOLOR=1
-
-      export EMAIL="${email}"
-
-      # nix shortcuts
-      shell() {
-          nix-shell '<nixpkgs>' -A "$1"
-      }
-
-      # Use difftastic, syntax-aware diffing
-      alias diff=difft
-
-      # Always color ls and group directories
-      alias ls='ls --color=auto'
-
-      export KEYTIMEOUT=1
-
-      vi-search-fix() {
-        zle vi-cmd-mode
-        zle .vi-history-search-backward
-      }
-      autoload vi-search-fix
-      zle -N vi-search-fix
-      bindkey -M viins '\e/' vi-search-fix
-
-      bindkey "^?" backward-delete-char
-
-      resume() {
-        fg
-        zle push-input
-        BUFFER=""
-        zle accept-line
-      }
-      zle -N resume
-      bindkey "^Z" resume
-
-      # Configure pure-promt
-      autoload -Uz promptinit && promptinit && prompt pure
-      zstyle :prompt:pure:prompt:success color green
-    '';
+    initContent = builtins.readFile ./config/zsh/config.zsh;
   };
 
   git = {
