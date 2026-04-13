@@ -16,6 +16,7 @@ with pkgs;
   # B
   basedpyright # Python language server
   bash-completion # Bash completion scripts
+  bash-language-server # Bash language server
   bat # cat clone with syntax highlighting
 
   # C
@@ -50,7 +51,6 @@ with pkgs;
   iosevka
 
   # J
-  jetbrains-mono
   jq # command line json processor
   jsonnet-language-server # Jsonnet language server
   just # save and run project specific commands
@@ -67,14 +67,10 @@ with pkgs;
   meslo-lgs-nf
 
   # N
-  neofetch # System information tool
   neovim # Neovim text editor
   nil # nix language server
   nixpkgs-fmt # Nix file formatter
   nmap # Network scanner
-  nodePackages.bash-language-server # Bash language server
-  nodePackages.typescript-language-server # TypeScript language server
-  nodePackages.vim-language-server # Vim language server
   noto-fonts
 
   # O
@@ -109,6 +105,7 @@ with pkgs;
   tgswitch
   tmux # Terminal multiplexer
   tree # Directory tree viewer
+  typescript-language-server # TypeScript language server
 
   # U
   universal-ctags # maintained ctags implementation
@@ -117,6 +114,7 @@ with pkgs;
 
   # V
   vim # Vim text editor
+  vim-language-server # Vim language server
   virtualenv
   vue-language-server # Vue language server
 
