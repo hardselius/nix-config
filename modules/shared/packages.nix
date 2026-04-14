@@ -62,6 +62,7 @@ with pkgs;
   less # more advanced file pager than `more`
   libfido2 # FIDO2 library
   llama-cpp # LLM stuff
+  lua-language-server # Lua language server
 
   # M
   meslo-lgs-nf
