@@ -110,6 +110,9 @@ in
     lfs = {
       enable = true;
     };
+    signing = {
+      format = "openpgp";
+    };
     settings = {
       user = {
         inherit name;
