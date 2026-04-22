@@ -203,7 +203,7 @@ in
     package = if stdenv.isDarwin then pkgs.ghostty-bin else pkgs.ghostty;
     settings = {
       theme = "light:Alabaster, dark:Alabaster Dark";
-      font-family = "Aporetic Sans Mono";
+      font-family = "Ioskeley Mono";
       shell-integration-features = "ssh-env";
     };
     themes = {
