@@ -113,6 +113,7 @@ with pkgs;
   universal-ctags # maintained ctags implementation
   unrar
   unzip
+  uv
 
   # V
   vim # Vim text editor
