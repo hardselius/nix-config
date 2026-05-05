@@ -77,46 +77,7 @@ shell() {
 	nix-shell '<nixpkgs>' -A "$1"
 }
 
-history_truncate() {
-	# Details: https://is.gd/HPAtE5
-	echo "Before: $(du -shL "$HISTFILE")"
-	# Remove previous truncation leftovers.
-	command rm -f /tmp/history
-	# First, remove duplicates.
-	tac "$HISTFILE" | awk '!x[$0]++' | tac >/tmp/history
-	# Second, remove certain basic commands.
-	sed -e '/^cd/d' -e '/^cp/d' -e '/^dr/d' -e '/^fd/d' -e '/^ll/d' \
-		-e '/^ls/d' -e '/^mc/d' \
-		-e '/^mk/d' -e '/^mv/d' -e '/^open/d' \
-		-e '/^qmv/d' -e '/^rg/d' -e '/^rm/d' -e '/^un/d' -e '/^v /d' \
-		-e '/^you/d' -e '/^yt/d' -e '/^z/d' -i /tmp/history
-	# Use 'cp' instead of 'mv' to deal with symlinked ~/.history. Use
-	# 'command' to bypass aliases.
-	command cp /tmp/history "$HISTFILE" && command rm /tmp/history
-	echo "After: $(du -shL "$HISTFILE")"
-	history -c && history -r
-}
-
 shell_config() {
-	# First, make sure ~/.history has not been truncated.
-	if [[ $(wc -l ~/.history | awk '{print $1}') -lt 1000 ]]; then
-		echo 'Note: ~/.history appears to be have been truncated.'
-	fi
-
-	# History settings.
-	HISTCONTROL=ignoreboth:erasedups # Ignore and erase duplicates
-	HISTFILE=$HOME/.history          # Custom history file
-	HISTFILESIZE=99999               # Max size of history file
-	HISTIGNORE="?:??"                # Ignore one and two letter commands
-	HISTSIZE=99999                   # Amount of history to preserve
-	# Note, to immediately append to history file refer to the 'prompt'
-	# function.
-
-	# Disable /etc/bashrc_Apple_Terminal Bash sessions on Mac, it does not play
-	# nice with normal bash history. Also, create a ~/.bash_sessions_disable
-	# file to be double sure to disable Bash sessions.
-	export SHELL_SESSION_HISTORY=0
-
 	# Enable useful shell options:
 	#  - autocd - change directory without no need to type 'cd' when changing directory
 	#  - cdspell - automatically fix directory typos when changing directory

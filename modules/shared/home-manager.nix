@@ -31,6 +31,17 @@ in
     enableZshIntegration = true;
   };
 
+  atuin = {
+    enable = true;
+    enableBashIntegration = true;
+    enableZshIntegration = true;
+    settings = {
+      search_mode = "fuzzy";
+      style = "compact";
+      keymap_mode = "vim-normal";
+    };
+  };
+
   zoxide = {
     enable = true;
     enableBashIntegration = true;
@@ -96,10 +107,10 @@ in
     defaultKeymap = "viins";
     dotDir = "${config.xdg.configHome}/zsh";
     history = {
-      size = 50000;
-      save = 500000;
+      size = 1000;
+      save = 1000;
       ignoreDups = true;
-      share = true;
+      share = false;
     };
 
     initContent = builtins.readFile ./config/zsh/config.zsh;
