@@ -26,6 +26,9 @@ with pkgs;
   curl
 
   # D
+  docker
+  docker-compose
+  docker-credential-helpers
   dejavu_fonts
   devbox # Development environment manager
 
