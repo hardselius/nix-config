@@ -20,6 +20,7 @@ with pkgs;
   bat # cat clone with syntax highlighting
 
   # C
+  colima # Container runtime for with minimal setup
   copilot-language-server
   coreutils # GNU core utilites
   curl
