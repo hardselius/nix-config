@@ -35,6 +35,12 @@ in
     enable = true;
     enableBashIntegration = true;
     enableZshIntegration = true;
+    daemon = {
+      enable = true;
+    };
+    flags = [
+      "--disable-up-arrow"
+    ];
     settings = {
       search_mode = "fuzzy";
       style = "compact";
