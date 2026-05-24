@@ -52,7 +52,6 @@ with pkgs;
 
   # I
   iftop # Network bandwidth monitor
-  iosevka
   ioskeley-mono.normal # Iosevka derivative
 
   # J
@@ -88,8 +87,8 @@ with pkgs;
 
   # P
   pass # Password manager
+  pi-coding-agent # AI coding agent
   podman # Docker replacement
-  pqrs # Cli too to inspect parquet files
   proggyfonts
   pwgen # Password generator
   python3 # Python 3
