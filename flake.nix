@@ -5,6 +5,7 @@
     nixpkgs.url = "https://flakehub.com/f/NixOS/nixpkgs/0.1";
     determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/3";
     home-manager.url = "github:nix-community/home-manager";
+    pi.url = "github:lukasl-dev/pi.nix";
     darwin = {
       url = "https://flakehub.com/f/nix-darwin/nix-darwin/0.1";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -46,6 +47,7 @@
       home-manager,
       nixpkgs,
       disko,
+      pi,
       ...
     }@inputs:
     let

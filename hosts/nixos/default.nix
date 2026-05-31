@@ -63,7 +63,13 @@ in
         "https://nix-community.cachix.org"
         "https://cache.nixos.org"
       ];
-      trusted-public-keys = [ "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=" ];
+      trusted-public-keys = [
+        "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+      ];
+      extra-substituters = [ "https://pi.cachix.org" ];
+      extra-trusted-public-keys = [
+        "pi.cachix.org-1:lGeoGJaZ5ZDabuRzkcD5EBTNnDM4HJ1vqeOxlWk1Flk="
+      ];
     };
 
     package = pkgs.nix;
