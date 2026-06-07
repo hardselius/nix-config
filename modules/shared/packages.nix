@@ -87,6 +87,7 @@ with pkgs;
   openssl # OpenSSL
 
   # P
+  pandoc
   pass # Password manager
   pi-coding-agent # AI coding agent
   podman # Docker replacement
@@ -112,6 +113,7 @@ with pkgs;
   tmux # Terminal multiplexer
   tree # Directory tree viewer
   typescript-language-server # TypeScript language server
+  typst # Typesetting system
 
   # U
   universal-ctags # maintained ctags implementation
