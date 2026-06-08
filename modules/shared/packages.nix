@@ -80,8 +80,6 @@ with pkgs;
   noto-fonts
 
   # O
-  ollama # LLM stuff
-  opencode # Open source AI coding agent
   openconnect # CLI VPN client
   openssh # SSH client
   openssl # OpenSSL
