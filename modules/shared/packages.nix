@@ -89,6 +89,7 @@ with pkgs;
   pass # Password manager
   pi-coding-agent # AI coding agent
   podman # Docker replacement
+  postgres-language-server # PostgreSQL language server
   proggyfonts
   pwgen # Password generator
   python3 # Python 3
