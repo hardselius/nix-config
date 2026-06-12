@@ -25,10 +25,6 @@
       url = "github:homebrew/homebrew-cask";
       flake = false;
     };
-    smithy-lang-tap = {
-      url = "github:smithy-lang/homebrew-tap";
-      flake = false;
-    };
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -43,7 +39,6 @@
       homebrew-bundle,
       homebrew-core,
       homebrew-cask,
-      smithy-lang-tap,
       home-manager,
       nixpkgs,
       disko,
@@ -135,7 +130,6 @@
                   "homebrew/homebrew-core" = homebrew-core;
                   "homebrew/homebrew-cask" = homebrew-cask;
                   "homebrew/homebrew-bundle" = homebrew-bundle;
-                  "smithy-lang/homebrew-tap" = smithy-lang-tap;
                 };
                 mutableTaps = false;
                 autoMigrate = true;

@@ -1,14 +1,11 @@
 {
   config,
   pkgs,
-  lib,
-  home-manager,
   ...
 }:
 
 let
   user = "mch";
-  email = "martin@hardselius.dev";
   # Define the content of your file as a derivation
   sharedFiles = import ../shared/files.nix { inherit config pkgs; };
   additionalFiles = import ./files.nix { inherit user config pkgs; };
@@ -30,7 +27,6 @@ in
     enable = true;
     casks = pkgs.callPackage ./casks.nix { };
     brews = [
-      "smithy-cli"
       "node"
     ];
     # onActivation.cleanup = "uninstall";
