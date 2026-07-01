@@ -17,13 +17,6 @@ in
   direnv = {
     enable = true;
     nix-direnv.enable = true;
-    mise.enable = true;
-  };
-
-  mise = {
-    enable = true;
-    enableBashIntegration = true;
-    enableZshIntegration = true;
   };
 
   dircolors = {

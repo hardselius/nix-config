@@ -70,7 +70,6 @@ with pkgs;
 
   # M
   meslo-lgs-nf
-  mise
 
   # N
   neovim # Neovim text editor
