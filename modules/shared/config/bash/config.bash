@@ -40,7 +40,7 @@ dev_config() {
 		PATH=$PATH:~/.pnpm-packages/bin
 	fi
 	if [[ -x ~/.npm-packages/bin ]]; then
-		PATH=$PATH:~/.pnpm-packages/bin
+		PATH=$PATH:~/.npm-packages/bin
 	fi
 	if [[ -x ~/.cargo/bin ]]; then
 		PATH=$PATH:~/.cargo/bin
