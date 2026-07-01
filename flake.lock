@@ -444,11 +444,11 @@
         "systems": "systems"
       },
       "locked": {
-        "lastModified": 1782136524,
-        "narHash": "sha256-ZmNbXFrmpYWTJOlMFZdDmWV0UbRzFz9pNRZi8HDV/nI=",
+        "lastModified": 1782854991,
+        "narHash": "sha256-0fYmMFXm4jfhLLLlaf7bKwz2A4eVdgeYkCBAXjt/uAI=",
         "owner": "lukasl-dev",
         "repo": "pi.nix",
-        "rev": "29c6a9e994dc9d2e2e0802915b7ba975f687f78b",
+        "rev": "18993c3ec791d1acaad03577a40fd33e9e9ac844",
         "type": "github"
       },
       "original": {
