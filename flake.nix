@@ -75,33 +75,37 @@
               '';
             };
         };
-      mkApp = scriptName: system: {
-        type = "app";
-        program = "${
-          (nixpkgs.legacyPackages.${system}.writeScriptBin scriptName ''
-            #!/usr/bin/env bash
-            PATH=${nixpkgs.legacyPackages.${system}.git}/bin:$PATH
-            echo "Running ${scriptName} for ${system}"
-            exec ${self}/apps/${system}/${scriptName}
-          '')
-        }/bin/${scriptName}";
-      };
+      mkApp =
+        scriptName: system:
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+          os = if nixpkgs.lib.hasSuffix "darwin" system then "darwin" else "linux";
+          script = self + "/apps/${os}/${scriptName}";
+        in
+        assert nixpkgs.lib.assertMsg (builtins.pathExists script)
+          "app '${scriptName}' is declared for ${system} but ${toString script} does not exist";
+        {
+          type = "app";
+          program = "${
+            (pkgs.writeScriptBin scriptName ''
+              #!/usr/bin/env bash
+              PATH=${pkgs.git}/bin:$PATH
+              exec env SYSTEM_TYPE=${system} ${script} "$@"
+            '')
+          }/bin/${scriptName}";
+        };
       mkLinuxApps = system: {
         "apply" = mkApp "apply" system;
         "build-switch" = mkApp "build-switch" system;
-        "copy-keys" = mkApp "copy-keys" system;
-        "create-keys" = mkApp "create-keys" system;
-        "check-keys" = mkApp "check-keys" system;
-        "install" = mkApp "install" system;
       };
       mkDarwinApps = system: {
         "apply" = mkApp "apply" system;
         "build" = mkApp "build" system;
         "build-switch" = mkApp "build-switch" system;
+        "rollback" = mkApp "rollback" system;
+        "check-keys" = mkApp "check-keys" system;
         "copy-keys" = mkApp "copy-keys" system;
         "create-keys" = mkApp "create-keys" system;
-        "check-keys" = mkApp "check-keys" system;
-        "rollback" = mkApp "rollback" system;
       };
     in
     {
