@@ -123,7 +123,6 @@ with pkgs;
   vim # Vim text editor
   vim-language-server # Vim language server
   virtualenv
-  vue-language-server # Vue language server
 
   # W
   watch
