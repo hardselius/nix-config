@@ -29,6 +29,8 @@ in
     enable = true;
     enableBashIntegration = true;
     enableZshIntegration = true;
+    # Yield Ctrl-R to atuin (the history manager owns it); keep Ctrl-T / Alt-C.
+    historyWidget.command = "";
   };
 
   atuin = {
