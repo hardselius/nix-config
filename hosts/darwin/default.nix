@@ -1,8 +1,4 @@
-{ lib, pkgs, ... }:
-
-let
-  user = "mch";
-in
+{ lib, pkgs, user, ... }:
 
 {
   imports = [

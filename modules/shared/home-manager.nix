@@ -2,13 +2,13 @@
   config,
   pkgs,
   lib,
+  user,
   ...
 }:
 
 let
   inherit (pkgs) stdenv;
   name = "Martin Hardselius";
-  user = "mch";
   email = "martin@hardselius.dev";
   githubUser = "hardselius";
   masterKey = "3F35E4CACBF42DE12E9053E503A6E6F786936619";

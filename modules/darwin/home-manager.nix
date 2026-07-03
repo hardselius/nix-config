@@ -1,11 +1,11 @@
 {
   config,
   pkgs,
+  user,
   ...
 }:
 
 let
-  user = "mch";
   # Define the content of your file as a derivation
   sharedFiles = import ../shared/files.nix { inherit config pkgs; };
   additionalFiles = import ./files.nix { inherit user config pkgs; };
@@ -81,7 +81,7 @@ in
             # vimdiff = "nvim -d";
           };
         };
-        programs = { } // import ../shared/home-manager.nix { inherit config pkgs lib; };
+        programs = { } // import ../shared/home-manager.nix { inherit config pkgs lib user; };
 
         # Marked broken Oct 20, 2022 check later to remove this
         # https://github.com/nix-community/home-manager/issues/3344
