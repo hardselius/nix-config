@@ -26,9 +26,7 @@ in
   homebrew = {
     enable = true;
     casks = pkgs.callPackage ./casks.nix { };
-    brews = [
-      "node"
-    ];
+    brews = [ ];
     # onActivation.cleanup = "uninstall";
 
     # These app IDs are from using the mas CLI app
@@ -81,7 +79,16 @@ in
             # vimdiff = "nvim -d";
           };
         };
-        programs = { } // import ../shared/home-manager.nix { inherit config pkgs lib user; };
+        programs =
+          { }
+          // import ../shared/home-manager.nix {
+            inherit
+              config
+              pkgs
+              lib
+              user
+              ;
+          };
 
         # Marked broken Oct 20, 2022 check later to remove this
         # https://github.com/nix-community/home-manager/issues/3344
