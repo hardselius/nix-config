@@ -66,16 +66,21 @@ in
       trusted-public-keys = [
         "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
       ];
-      extra-substituters = [ "https://pi.cachix.org" ];
+      extra-substituters = [
+        "https://pi.cachix.org"
+        "https://cache.lix.systems"
+      ];
       extra-trusted-public-keys = [
         "pi.cachix.org-1:lGeoGJaZ5ZDabuRzkcD5EBTNnDM4HJ1vqeOxlWk1Flk="
+        "cache.lix.systems:aBnZUw8zA7H35Cz2RyKFVs3H4PlGTLawyY5KRbvJR8o="
+      ];
+      experimental-features = [
+        "nix-command"
+        "flakes"
       ];
     };
 
-    package = pkgs.nix;
-    extraOptions = ''
-      experimental-features = nix-command flakes
-    '';
+    package = pkgs.lix;
   };
 
   # Manages keys and such

@@ -3,7 +3,6 @@
 
   inputs = {
     nixpkgs.url = "https://flakehub.com/f/NixOS/nixpkgs/0.1";
-    determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/3";
     home-manager.url = "github:nix-community/home-manager";
     pi.url = "github:lukasl-dev/pi.nix";
     darwin = {
@@ -86,13 +85,11 @@
           "app '${scriptName}' is declared for ${system} but ${toString script} does not exist";
         {
           type = "app";
-          program = "${
-            (pkgs.writeScriptBin scriptName ''
-              #!/usr/bin/env bash
-              PATH=${pkgs.git}/bin:$PATH
-              exec env SYSTEM_TYPE=${system} ${script} "$@"
-            '')
-          }/bin/${scriptName}";
+          program = "${(pkgs.writeScriptBin scriptName ''
+            #!/usr/bin/env bash
+            PATH=${pkgs.git}/bin:$PATH
+            exec env SYSTEM_TYPE=${system} ${script} "$@"
+          '')}/bin/${scriptName}";
         };
       mkLinuxApps = system: {
         "apply" = mkApp "apply" system;
@@ -121,8 +118,6 @@
             inherit user;
           };
           modules = [
-            # Add the determinate nix-darwin module
-            inputs.determinate.darwinModules.default
             home-manager.darwinModules.home-manager
             nix-homebrew.darwinModules.nix-homebrew
             {

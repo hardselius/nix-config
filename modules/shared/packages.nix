@@ -52,7 +52,6 @@ with pkgs;
 
   # I
   iftop # Network bandwidth monitor
-  ioskeley-mono.normal # Iosevka derivative
 
   # J
   jq # command line json processor
