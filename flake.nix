@@ -1,17 +1,23 @@
 {
-  description = "Starter Configuration for MacOS and NixOS";
+  description = "Configuration for MacOS and NixOS";
 
   inputs = {
+    # Core
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    home-manager.url = "github:nix-community/home-manager";
-    pi.url = "github:lukasl-dev/pi.nix";
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # macOS
     darwin = {
       url = "github:nix-darwin/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nix-homebrew = {
-      url = "github:zhaofengli-wip/nix-homebrew";
-    };
+    nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
+
+    # Homebrew taps, pinned as plain sources so `mutableTaps = false` has
+    # something fixed to point at.
     homebrew-bundle = {
       url = "github:homebrew/homebrew-bundle";
       flake = false;
@@ -24,64 +30,81 @@
       url = "github:homebrew/homebrew-cask";
       flake = false;
     };
+
+    # NixOS
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # Overlays consumed by modules/shared
+    pi.url = "github:lukasl-dev/pi.nix";
   };
 
   outputs =
     {
       self,
+      nixpkgs,
+      home-manager,
       darwin,
       nix-homebrew,
       homebrew-bundle,
       homebrew-core,
       homebrew-cask,
-      home-manager,
-      nixpkgs,
       disko,
-      pi,
       ...
     }@inputs:
     let
+      inherit (nixpkgs) lib;
+
       user = "mch";
+
       linuxSystems = [
         "x86_64-linux"
         "aarch64-linux"
       ];
       darwinSystems = [
         "aarch64-darwin"
-        "x86_64-darwin"
       ];
-      forAllSystems = f: nixpkgs.lib.genAttrs (linuxSystems ++ darwinSystems) f;
-      devShell =
-        system:
-        let
-          pkgs = nixpkgs.legacyPackages.${system};
-        in
-        {
-          default =
-            with pkgs;
-            mkShell {
-              nativeBuildInputs = with pkgs; [
-                bashInteractive
-                git
-                curl
-              ];
-              shellHook = ''
-                export EDITOR=vim
-              '';
-            };
-        };
+
+      forLinuxSystems = lib.genAttrs linuxSystems;
+      forDarwinSystems = lib.genAttrs darwinSystems;
+      forAllSystems = lib.genAttrs (linuxSystems ++ darwinSystems);
+
+      pkgsFor = system: nixpkgs.legacyPackages.${system};
+
+      # Every flake input is visible to modules, plus the account this
+      # configuration is built for.
+      specialArgs = inputs // {
+        inherit user;
+      };
+
+      ## Apps -------------------------------------------------------------
+      # Names of the scripts under apps/<os>/ exposed as `nix run .#<name>`.
+      linuxAppNames = [
+        "apply"
+        "build-switch"
+      ];
+      darwinAppNames = [
+        "apply"
+        "build"
+        "build-switch"
+        "rollback"
+        "check-keys"
+        "copy-keys"
+        "create-keys"
+      ];
+
       mkApp =
-        scriptName: system:
+        system: scriptName:
         let
-          pkgs = nixpkgs.legacyPackages.${system};
-          os = if nixpkgs.lib.hasSuffix "darwin" system then "darwin" else "linux";
+          pkgs = pkgsFor system;
+          os = if lib.hasSuffix "darwin" system then "darwin" else "linux";
           script = self + "/apps/${os}/${scriptName}";
         in
-        assert nixpkgs.lib.assertMsg (builtins.pathExists script)
+        # `script` is a store path here, so pathExists is meaningful under pure
+        # eval and catches a name declared below without a matching file.
+        assert lib.assertMsg (builtins.pathExists script)
           "app '${scriptName}' is declared for ${system} but ${toString script} does not exist";
         {
           type = "app";
@@ -91,35 +114,41 @@
             exec env SYSTEM_TYPE=${system} ${script} "$@"
           '')}/bin/${scriptName}";
         };
-      mkLinuxApps = system: {
-        "apply" = mkApp "apply" system;
-        "build-switch" = mkApp "build-switch" system;
-      };
-      mkDarwinApps = system: {
-        "apply" = mkApp "apply" system;
-        "build" = mkApp "build" system;
-        "build-switch" = mkApp "build-switch" system;
-        "rollback" = mkApp "rollback" system;
-        "check-keys" = mkApp "check-keys" system;
-        "copy-keys" = mkApp "copy-keys" system;
-        "create-keys" = mkApp "create-keys" system;
-      };
+
+      mkApps = names: system: lib.genAttrs names (mkApp system);
+
+      ## Dev shell --------------------------------------------------------
+      mkDevShells =
+        system:
+        let
+          pkgs = pkgsFor system;
+        in
+        {
+          default = pkgs.mkShell {
+            nativeBuildInputs = with pkgs; [
+              bashInteractive
+              git
+              curl
+            ];
+            shellHook = ''
+              export EDITOR=vim
+            '';
+          };
+        };
     in
     {
-      devShells = forAllSystems devShell;
+      devShells = forAllSystems mkDevShells;
+
       # nixfmt-tree wraps nixfmt, which is also nil's built-in formatter, so
       # `nix fmt` and editor format-on-save produce identical output.
-      formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt-tree);
-      apps =
-        nixpkgs.lib.genAttrs linuxSystems mkLinuxApps // nixpkgs.lib.genAttrs darwinSystems mkDarwinApps;
+      formatter = forAllSystems (system: (pkgsFor system).nixfmt-tree);
 
-      darwinConfigurations = nixpkgs.lib.genAttrs darwinSystems (
+      apps = forLinuxSystems (mkApps linuxAppNames) // forDarwinSystems (mkApps darwinAppNames);
+
+      darwinConfigurations = forDarwinSystems (
         system:
         darwin.lib.darwinSystem {
-          inherit system;
-          specialArgs = inputs // {
-            inherit user;
-          };
+          inherit system specialArgs;
           modules = [
             home-manager.darwinModules.home-manager
             nix-homebrew.darwinModules.nix-homebrew
@@ -141,13 +170,10 @@
         }
       );
 
-      nixosConfigurations = nixpkgs.lib.genAttrs linuxSystems (
+      nixosConfigurations = forLinuxSystems (
         system:
-        nixpkgs.lib.nixosSystem {
-          inherit system;
-          specialArgs = inputs // {
-            inherit user;
-          };
+        lib.nixosSystem {
+          inherit system specialArgs;
           modules = [
             disko.nixosModules.disko
             home-manager.nixosModules.home-manager

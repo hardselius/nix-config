@@ -18,9 +18,10 @@ let
   };
   shared-files = import ../shared/files.nix { inherit config pkgs; };
 
+  # replaceVars takes src and replacements as two separate arguments; passing a
+  # single merged attrset silently yields a partially applied function instead.
   polybar-user_modules = builtins.readFile (
-    pkgs.replaceVars {
-      src = ./config/polybar/user_modules.ini;
+    pkgs.replaceVars ./config/polybar/user_modules.ini {
       packages = "${xdg_configHome}/polybar/bin/check-nixos-updates.sh";
       searchpkgs = "${xdg_configHome}/polybar/bin/search-nixos-updates.sh";
       launcher = "${xdg_configHome}/polybar/bin/launcher.sh";
@@ -29,8 +30,7 @@ let
     }
   );
 
-  polybar-config = pkgs.replaceVars {
-    src = ./config/polybar/config.ini;
+  polybar-config = pkgs.replaceVars ./config/polybar/config.ini {
     font0 = "DejaVu Sans:size=12;3";
     font1 = "feather:size=12;3"; # from overlay
   };
