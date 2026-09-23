@@ -2,12 +2,11 @@
   description = "Starter Configuration for MacOS and NixOS";
 
   inputs = {
-    nixpkgs.url = "https://flakehub.com/f/NixOS/nixpkgs/0.1";
-    determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/3";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     home-manager.url = "github:nix-community/home-manager";
     pi.url = "github:lukasl-dev/pi.nix";
     darwin = {
-      url = "https://flakehub.com/f/nix-darwin/nix-darwin/0.1";
+      url = "github:nix-darwin/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-homebrew = {
@@ -86,13 +85,11 @@
           "app '${scriptName}' is declared for ${system} but ${toString script} does not exist";
         {
           type = "app";
-          program = "${
-            (pkgs.writeScriptBin scriptName ''
-              #!/usr/bin/env bash
-              PATH=${pkgs.git}/bin:$PATH
-              exec env SYSTEM_TYPE=${system} ${script} "$@"
-            '')
-          }/bin/${scriptName}";
+          program = "${(pkgs.writeScriptBin scriptName ''
+            #!/usr/bin/env bash
+            PATH=${pkgs.git}/bin:$PATH
+            exec env SYSTEM_TYPE=${system} ${script} "$@"
+          '')}/bin/${scriptName}";
         };
       mkLinuxApps = system: {
         "apply" = mkApp "apply" system;
@@ -110,6 +107,9 @@
     in
     {
       devShells = forAllSystems devShell;
+      # nixfmt-tree wraps nixfmt, which is also nil's built-in formatter, so
+      # `nix fmt` and editor format-on-save produce identical output.
+      formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt-tree);
       apps =
         nixpkgs.lib.genAttrs linuxSystems mkLinuxApps // nixpkgs.lib.genAttrs darwinSystems mkDarwinApps;
 
@@ -121,8 +121,6 @@
             inherit user;
           };
           modules = [
-            # Add the determinate nix-darwin module
-            inputs.determinate.darwinModules.default
             home-manager.darwinModules.home-manager
             nix-homebrew.darwinModules.nix-homebrew
             {

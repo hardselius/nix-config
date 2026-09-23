@@ -5,7 +5,6 @@ with pkgs;
   # A
   age # File encryption tool
   age-plugin-yubikey # YubiKey plugin for age encryption
-  alejandra
   aporetic # Custom build of Iosevka
   asciidoctor
   aspell # Spell checker
@@ -52,7 +51,6 @@ with pkgs;
 
   # I
   iftop # Network bandwidth monitor
-  ioskeley-mono.normal # Iosevka derivative
 
   # J
   jq # command line json processor
@@ -74,7 +72,6 @@ with pkgs;
   # N
   neovim # Neovim text editor
   nil # nix language server
-  nixpkgs-fmt # Nix file formatter
   nmap # Network scanner
   noto-fonts
 

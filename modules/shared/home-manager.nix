@@ -222,7 +222,7 @@ in
 
   ghostty = {
     enable = true;
-    package = if stdenv.isDarwin then pkgs.ghostty-bin else pkgs.ghostty;
+    package = if stdenv.hostPlatform.isDarwin then pkgs.ghostty-bin else pkgs.ghostty;
     settings = {
       theme = "light:Alabaster, dark:Alabaster Dark";
       font-family = "Aporetic Sans Mono";
@@ -275,12 +275,11 @@ in
       };
       "github.com" = {
         identitiesOnly = true;
-        identityFile = (
+        identityFile =
           if pkgs.stdenv.hostPlatform.isDarwin then
             "/Users/${user}/.ssh/id_github"
           else
-            "/home/${user}/.ssh/id_github"
-        );
+            "/home/${user}/.ssh/id_github";
       };
     };
   };
@@ -420,7 +419,7 @@ in
     scdaemonSettings = {
       disable-ccid = true;
     }
-    // lib.optionalAttrs pkgs.stdenv.isDarwin {
+    // lib.optionalAttrs pkgs.stdenv.hostPlatform.isDarwin {
       reader-port = ''"Yubico YubiKey OTP+FIDO+CCID"'';
     };
   };

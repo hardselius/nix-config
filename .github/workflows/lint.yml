@@ -1,9 +1,13 @@
-name: Statix Lint
+name: Lint
 
 on:
   push:
     branches:
       - main
+    paths-ignore:
+      - '.github/**'
+      - 'README.md'
+  pull_request:
     paths-ignore:
       - '.github/**'
       - 'README.md'
@@ -17,21 +21,32 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
 
-      - name: Install Nix
-        uses: DeterminateSystems/nix-installer-action@main
+      - name: Install Lix
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          curl -sSf -L https://install.lix.systems/lix -o /tmp/lix-install.sh
+          sh /tmp/lix-install.sh install --no-confirm \
+            --extra-conf "access-tokens = github.com=$GH_TOKEN"
+          echo "/nix/var/nix/profiles/default/bin" >> "$GITHUB_PATH"
+
+      - name: Check formatting
+        run: nix fmt -- --ci
 
       - name: Run statix linter
         run: |
           echo "Linting Flake..."
-          if nix run --extra-experimental-features 'nix-command flakes' nixpkgs#statix -- check .; then
-            echo "success=true" >> $GITHUB_ENV
+          if nix run nixpkgs#statix -- check .; then
+            echo "success=true" >> "$GITHUB_ENV"
           else
             echo "Lint failed, listing flake.lock for debugging:"
             cat flake.lock
-            echo "success=false" >> $GITHUB_ENV
+            echo "success=false" >> "$GITHUB_ENV"
             exit 1
           fi
 
       - name: Determine lint result
         id: build-result
-        run: echo "success=${{ env.success }}" >> $GITHUB_OUTPUT
+        env:
+          SUCCESS: ${{ env.success }}
+        run: echo "success=$SUCCESS" >> "$GITHUB_OUTPUT"

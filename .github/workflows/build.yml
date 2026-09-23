@@ -20,11 +20,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
 
-      - name: Install Nix
-        uses: DeterminateSystems/nix-installer-action@main
-
-      - name: Setup Cache
-        uses: DeterminateSystems/flakehub-cache-action@main
+      - name: Install Lix
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          curl -sSf -L https://install.lix.systems/lix -o /tmp/lix-install.sh
+          sh /tmp/lix-install.sh install --no-confirm \
+            --extra-conf "access-tokens = github.com=$GH_TOKEN"
+          echo "/nix/var/nix/profiles/default/bin" >> "$GITHUB_PATH"
 
       - name: Build config
         run: |
