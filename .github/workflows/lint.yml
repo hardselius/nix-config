@@ -22,9 +22,12 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Install Lix
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           curl -sSf -L https://install.lix.systems/lix -o /tmp/lix-install.sh
-          sh /tmp/lix-install.sh install --no-confirm
+          sh /tmp/lix-install.sh install --no-confirm \
+            --extra-conf "access-tokens = github.com=$GH_TOKEN"
           echo "/nix/var/nix/profiles/default/bin" >> "$GITHUB_PATH"
 
       - name: Check formatting
