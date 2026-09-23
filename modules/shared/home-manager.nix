@@ -275,12 +275,11 @@ in
       };
       "github.com" = {
         identitiesOnly = true;
-        identityFile = (
+        identityFile =
           if pkgs.stdenv.hostPlatform.isDarwin then
             "/Users/${user}/.ssh/id_github"
           else
-            "/home/${user}/.ssh/id_github"
-        );
+            "/home/${user}/.ssh/id_github";
       };
     };
   };
