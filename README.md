@@ -34,6 +34,7 @@ If you're coming from that setup, see
 ```sh
 just build         # build without activating
 just build-switch  # build and activate (requires sudo)
+just fmt           # format all Nix files
 just rollback      # roll back to a previous generation
 nix flake check    # evaluate all outputs
 nix flake update   # update the input lock

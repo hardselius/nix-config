@@ -15,3 +15,8 @@
 [group('nix')]
 @rollback:
     nix run .#rollback
+
+# Format all Nix files.
+[group('nix')]
+@fmt:
+    nix fmt

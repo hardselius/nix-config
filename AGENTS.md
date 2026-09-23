@@ -13,6 +13,7 @@
 
 - `just build` — build without activating
 - `just build-switch` — build and activate (requires `sudo`)
+- `just fmt` — format all Nix files (`nix fmt`)
 - `just rollback` — interactive; NEVER run non-interactively
 - `nix flake check` — evaluate all outputs
 - `nix run nixpkgs#statix -- check .` — lint (matches CI)
@@ -24,6 +25,7 @@
 - `just` recipes are thin wrappers — real logic belongs in `apps/<system>/` scripts
 - The username is the `user` let-binding in `flake.nix`; NEVER hardcode it elsewhere
 - Prefer nixpkgs packages over homebrew casks; use casks only for GUI apps unavailable in nixpkgs
+- Format Nix with `just fmt` — nixfmt is also nil's built-in formatter, so it matches editor format-on-save; NEVER use alejandra or nixpkgs-fmt
 - When nix-darwin takes over a file an installer owned, diff the old file against the generated one and port every setting before switching
 
 ## Boundaries

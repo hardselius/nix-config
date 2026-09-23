@@ -107,6 +107,9 @@
     in
     {
       devShells = forAllSystems devShell;
+      # nixfmt-tree wraps nixfmt, which is also nil's built-in formatter, so
+      # `nix fmt` and editor format-on-save produce identical output.
+      formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt-tree);
       apps =
         nixpkgs.lib.genAttrs linuxSystems mkLinuxApps // nixpkgs.lib.genAttrs darwinSystems mkDarwinApps;
 
