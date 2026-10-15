@@ -1,22 +1,11 @@
 {
-  config,
   pkgs,
-  lib,
   user,
   ...
 }:
 
 let
   xdg_configHome = "/home/${user}/.config";
-  shared-programs = import ../shared/home-manager.nix {
-    inherit
-      config
-      pkgs
-      lib
-      user
-      ;
-  };
-  shared-files = import ../shared/files.nix { inherit config pkgs; };
 
   # replaceVars takes src and replacements as two separate arguments; passing a
   # single merged attrset silently yields a partially applied function instead.
@@ -41,26 +30,15 @@ let
 
 in
 {
-  home = {
-    enableNixpkgsReleaseCheck = false;
-    username = "${user}";
-    homeDirectory = "/home/${user}";
-    packages = pkgs.callPackage ./packages.nix { };
-    file = shared-files // import ./files.nix { inherit user; };
-    stateVersion = "21.05";
-    shellAliases = {
-      tf = "terraform";
-      switch-yubikey = "gpg-connect-agent \"scd serialno\" \"learn --force\" /bye";
+  imports = [
+    ../linux/home-manager.nix
+    ../linux/desktop.nix
+  ];
 
-      # Get public ip directly from a DNS server instead of from some hip
-      # whatsmyip HTTP service. https://unix.stackexchange.com/a/81699
-      wanip = "dig @resolver4.opendns.com myip.opendns.com +short";
-      wanip4 = "dig @resolver4.opendns.com myip.opendns.com +short -4";
-      wanip6 = "dig @resolver1.ipv6-sandbox.opendns.com AAAA myip.opendns.com +short -6";
-      # vi = "nvim";
-      # vim = "nvim";
-      # vimdiff = "nvim -d";
-    };
+  home = {
+    packages = pkgs.callPackage ./packages.nix { };
+    file = import ./files.nix { inherit user; };
+    stateVersion = "21.05";
   };
 
   # Use a dark theme
@@ -141,9 +119,4 @@ in
     };
   };
 
-  programs = shared-programs // { };
-
-  xdg = {
-    enable = true;
-  };
 }

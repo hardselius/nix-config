@@ -1,5 +1,5 @@
 {
-  description = "Configuration for MacOS and NixOS";
+  description = "Configuration for MacOS, NixOS, and other Linux";
 
   inputs = {
     # Core
@@ -80,8 +80,15 @@
       };
 
       ## Apps -------------------------------------------------------------
-      # Names of the scripts under apps/<os>/ exposed as `nix run .#<name>`.
+      # Names of the scripts under apps/<dir>/ exposed as `nix run .#<name>`.
+      # On Linux the unprefixed names drive standalone home-manager, which
+      # works on any distribution; NixOS apps carry a `nixos-` prefix.
       linuxAppNames = [
+        "build"
+        "build-switch"
+        "rollback"
+      ];
+      nixosAppNames = [
         "apply"
         "build-switch"
       ];
@@ -96,11 +103,13 @@
       ];
 
       mkApp =
-        system: scriptName:
+        dir: system: scriptName:
         let
           pkgs = pkgsFor system;
-          os = if lib.hasSuffix "darwin" system then "darwin" else "linux";
-          script = self + "/apps/${os}/${scriptName}";
+          script = self + "/apps/${dir}/${scriptName}";
+          # Pinned by this flake, so the first switch on a fresh host needs no
+          # home-manager install of its own.
+          path = [ pkgs.git ] ++ lib.optional (dir == "linux") home-manager.packages.${system}.home-manager;
         in
         # `script` is a store path here, so pathExists is meaningful under pure
         # eval and catches a name declared below without a matching file.
@@ -110,12 +119,14 @@
           type = "app";
           program = "${(pkgs.writeScriptBin scriptName ''
             #!/usr/bin/env bash
-            PATH=${pkgs.git}/bin:$PATH
+            PATH=${lib.makeBinPath path}:$PATH
             exec env SYSTEM_TYPE=${system} ${script} "$@"
           '')}/bin/${scriptName}";
         };
 
-      mkApps = names: system: lib.genAttrs names (mkApp system);
+      mkApps =
+        dir: names: system:
+        lib.genAttrs names (mkApp dir system);
 
       ## Dev shell --------------------------------------------------------
       mkDevShells =
@@ -143,7 +154,13 @@
       # `nix fmt` and editor format-on-save produce identical output.
       formatter = forAllSystems (system: (pkgsFor system).nixfmt-tree);
 
-      apps = forLinuxSystems (mkApps linuxAppNames) // forDarwinSystems (mkApps darwinAppNames);
+      apps =
+        forLinuxSystems (
+          system:
+          mkApps "linux" linuxAppNames system
+          // lib.mapAttrs' (name: lib.nameValuePair "nixos-${name}") (mkApps "nixos" nixosAppNames system)
+        )
+        // forDarwinSystems (mkApps "darwin" darwinAppNames);
 
       darwinConfigurations = forDarwinSystems (
         system:
@@ -169,6 +186,29 @@
           ];
         }
       );
+
+      # Standalone home-manager for Linux distributions other than NixOS:
+      # `<system>` is headless, `<system>-desktop` adds GUI apps and GPU drivers.
+      homeConfigurations =
+        let
+          mkHome =
+            system: host:
+            home-manager.lib.homeManagerConfiguration {
+              pkgs = import nixpkgs (
+                { inherit system; } // import ./modules/shared/nixpkgs.nix { inherit (inputs) pi; }
+              );
+              extraSpecialArgs = { inherit user; };
+              modules = [ host ];
+            };
+        in
+        lib.foldl' (
+          acc: system:
+          acc
+          // {
+            ${system} = mkHome system ./hosts/linux;
+            "${system}-desktop" = mkHome system ./hosts/linux/desktop.nix;
+          }
+        ) { } linuxSystems;
 
       nixosConfigurations = forLinuxSystems (
         system:

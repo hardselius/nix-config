@@ -40,6 +40,30 @@ nix flake check    # evaluate all outputs
 nix flake update   # update the input lock
 ```
 
+## Non-NixOS Linux
+
+On other distributions the config runs as standalone home-manager
+(`homeConfigurations`): `<system>` is headless, `<system>-desktop` adds GUI
+apps and GPU drivers on top of whatever desktop the distribution runs. The
+same `just` recipes apply; `build-switch` needs no sudo. For the desktop
+variant, pass `--desktop`:
+
+```sh
+nix run .#build-switch -- --desktop
+```
+
+Home-manager only manages the user environment, so the host needs:
+
+- Lix installed (see above) with `nix-command` and `flakes` enabled, and the
+  substituters from `hosts/darwin/default.nix` copied into `/etc/nix/nix.conf`
+- zsh from the Nix profile added to `/etc/shells`, then `chsh -s ~/.nix-profile/bin/zsh`
+- `pcscd` from the distribution, for the YubiKey (scdaemon runs with `disable-ccid`)
+- docker or podman set up by the distribution; only the CLIs come from Nix
+- desktop only: a one-time `sudo non-nixos-gpu-setup`, using the exact
+  command home-manager prints during activation
+
+NixOS hosts use `nix run .#nixos-build-switch` and `nix run .#nixos-apply`.
+
 ## Gotchas
 
 ### Nix traffic is TLS-intercepted
